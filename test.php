@@ -1,7 +1,8 @@
 <?php
 
     require "PHPExcel-1.8/Classes/PHPExcel.php";
-    require "insertData.php";    
+    require "insertData.php";
+    //require "Classes/column.php";    
 
     //clearing the table
     $query = "delete from paziente";
@@ -21,18 +22,23 @@
 
     echo($sheet->getCell('A'.$rowOffset)->getValue());
     $data = array();
-    $data[0] = $sheet->getCell('A'.$rowOffset)->getValue();   //id
-    $data[1] = $sheet->getCell('C'.$rowOffset)->getValue();  //nome
-    $data[2] = $sheet->getCell('B'.$rowOffset)->getValue();  //cognome
-    $data[3] = $sheet->getCell('E'.$rowOffset)->getValue();  //data nascita prendo il campo dataintervento per test
-    $data[3] = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($data[3])); //converte il 
-    echo($data[3]);
-    $data[4] = $sheet->getCell('BK'.$rowOffset)->getValue(); //sesso
-    $data[5] = "";
-    $data[6] = "";
+    
+    /*$data[0] = $sheet->getCell('C'.$rowOffset)->getValue(); //nome
+    $data[1] = $sheet->getCell('B'.$rowOffset)->getValue(); //cognome 
+    $data[2] = $sheet->getCell('D'.$rowOffset)->getValue(); //dataNascita
+    //$data[2] = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($data[2])); //converte il 
+    echo($data[2]);
+    $data[3] = $sheet->getCell('BK'.$rowOffset)->getValue();    //sesso  
+    $data[4] = $sheet->getCell('CF'.$rowOffset)->getValue(); //altrePatologie
+    $data[5] = $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
+    $data[6] = 1;   //migratoDbCook */
 
+    $tempData = array();
+    $tempData[0] = new Column();
+    $tempData[0]->colName = "nome";
+    $tempData[0]->colValue = "abc";
     $temp = new insertData();
-    $temp->insert($data);
+    $temp->insert($tempData, "paziente");
     echo("done");
 
 ?>
