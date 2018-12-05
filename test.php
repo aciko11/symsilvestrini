@@ -1,5 +1,6 @@
 <?php
-
+ 
+    //PHPExcel class
     require "PHPExcel-1.8/Classes/PHPExcel.php";
     require "insertData.php";
     //require "Classes/column.php";    
@@ -8,17 +9,25 @@
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
 
-    $file = "files/Cook database 27feb17.xlsx"; //reference to the file
-    $excelReader = PHPExcel_IOFactory::createReaderForFile($file);
-    $excelObj = $excelReader->load($file);
+    //reference to the file
+    $file = "files/Cook database 27feb17.xlsx"; 
+
+    //creating a reader for the file
+    $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
+
+    //creating an excel object
+    $excelObj = $excelReader->load($file); 
+
+    //getting the sheet we want. getSheet(index) returns the sheet with the specified index
     $sheet = $excelObj->getSheet(0);
 
-    //$lastRow = $sheet->getHighestRow();
+    //$lastRow = $sheet->getHighestRow();   
     //$lastCol = $sheet->getHighestColumn();
     $lastColString = $sheet->getHighestDataColumn();    //returns the last column with data in string format eg. DH
     $lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
 
-    $rowOffset = 3; //offset where the data starts
+    //it's the offset for the first line of data in the file
+    $rowOffset = 3;
 
     echo($sheet->getCell('A'.$rowOffset)->getValue());
     $data = array();
@@ -40,5 +49,5 @@
     $temp = new insertData();
     $temp->insert($tempData, "paziente");
     echo("done");
-
+    
 ?>
