@@ -1,16 +1,22 @@
 <?php
  
     //PHPExcel class
-    require "PHPExcel-1.8/Classes/PHPExcel.php";
-    require "insertData.php";
-    //require "Classes/column.php";    
+    require 'PHPExcel-1.8/Classes/PHPExcel.php';
+    //connection class
+    require 'connection.php';
+    //insert query class 
+    require 'insertData.php';
+    //column structure class
+    require 'Classes/column.php';
+    
+    require 'Tables/Paziente.php';
 
     //clearing the table
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
 
     //reference to the file
-    $file = "files/Cook database 27feb17.xlsx"; 
+    $file = "files/Cook database 27feb17.ods"; 
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
@@ -25,7 +31,7 @@
     //$lastCol = $sheet->getHighestColumn();
     $lastColString = $sheet->getHighestDataColumn();    //returns the last column with data in string format eg. DH
     $lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
-
+    $rowsNumber = $sheet->getHighestDataRow();
     //it's the offset for the first line of data in the file
     $rowOffset = 3;
 
@@ -42,12 +48,18 @@
     $data[5] = $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
     $data[6] = 1;   //migratoDbCook */
 
+    /*
     $tempData = array();
     $tempData[0] = new Column();
     $tempData[0]->colName = "nome";
     $tempData[0]->colValue = "abc";
     $temp = new insertData();
     $temp->insert($tempData, "paziente");
+    */
+    $paziente = new Paziente();
+    $paziente->createData($sheet, $rowsNumber, $rowOffset);
+
+    mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");
     
 ?>

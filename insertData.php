@@ -1,9 +1,9 @@
 <?php
 
-require 'connection.php';
-require 'Classes/column.php';
 
-    class insertData{
+
+
+    class InsertData{
         
 
         //$data has to be an array of Column. Column is a structure with 2 properties: colName and colValue
@@ -11,10 +11,13 @@ require 'Classes/column.php';
 
             global $connect;
 
-            //$fields = "id, nome, cognome, datanascita, sesso, ultimamodifica, datainserimento";
-            //$id = $data[0];$nome = $data[1];$cognome = $data[2];$datanascita = $data[3];$sesso = $data[4];$ultimamodifica = $data[5];$datainserimento = $data[6];
+            //number of columns
             $dataSize = sizeof($data);
-            $query = "Insert into paziente(";
+
+            //constructing the query: "INSERT INTO ".$tablename."(".$data->colName.") values (".$data->colValue.");
+            $query = "Insert into ".$tableName."(";
+            
+            //all the column names
             for($i = 0; $i < $dataSize; $i++){
                 $temp = $data[$i]->colName;
                 $query = $query.$temp.", ";
@@ -22,6 +25,7 @@ require 'Classes/column.php';
             $query = substr_replace($query, "", -2);
             $query = $query.") values (";
 
+            //all the respective values
             for($i = 0; $i < $dataSize; $i++){
                 $temp = $data[$i]->colValue;
                 $query = $query."'".$temp."', ";
@@ -29,10 +33,10 @@ require 'Classes/column.php';
             $query = substr_replace($query, "", -2);
             $query = $query.");";
 
-            //$query = "Insert into paziente(".$fields.") values ('$id', '$nome', '$cognome', '$datanascita', '$sesso', '$ultimamodifica', '$datainserimento');";
-            mysqli_query($connect, $query) or die (mysqli_error($connect));
+            echo("<br>".$query."<br>");
 
-            mysqli_close($connect) or die(mysqli_error($connect));
+            //execuiting query
+            mysqli_query($connect, $query) or die (mysqli_error($connect));
         }
     }
     
