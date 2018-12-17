@@ -10,6 +10,7 @@
     require 'Classes/column.php';
     
     require 'Tables/Paziente.php';
+    require 'Tables/tipo_.php';
 
     //clearing the table
     $query = "delete from paziente";
@@ -56,8 +57,12 @@
     $temp = new insertData();
     $temp->insert($tempData, "paziente");
     */
-    $paziente = new Paziente();
-    $paziente->createData($sheet, $rowsNumber, $rowOffset);
+
+    //$paziente = new Paziente();
+    //$paziente->createData($sheet, $rowsNumber, $rowOffset);
+
+    $tipo = new Tipo();
+    $tipo->createData($sheet, $rowsNumber, $rowOffset);
 
     mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");

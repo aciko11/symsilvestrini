@@ -5,7 +5,7 @@
         function createData($sheet, $rowsNumber, $rowOffset){
 
             $tempData = array();
-            $temp = new Column();
+            //$temp = new Column();
 
             $insert = new InsertData();
 
