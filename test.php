@@ -15,6 +15,8 @@
     //clearing the table
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
+    $query = "delete from tipo_complicanza";
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
 
     //reference to the file
     $file = "files/Cook database 27feb17.ods"; 
