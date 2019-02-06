@@ -7,7 +7,7 @@
             $tempData = array();
             $insert = new InsertData();
 
-            $letters = array("J", "K", "L", "M", "N", "O", "P", "Q", "R", "T", "U", "V", "W", "X", 
+            $columns = array("J", "K", "L", "M", "N", "O", "P", "Q", "R", "T", "U", "V", "W", "X", 
             "AP", "GO", "GP", "GT", "IB");
 
             $rowOffset = 1;

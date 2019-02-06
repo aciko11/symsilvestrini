@@ -5,6 +5,7 @@
 
     class InsertData{
         
+        var $lastTemp = "";
 
         //$data has to be an array of Column. Column is a structure with 2 properties: colName and colValue
         function insert($data, $tableName){    
@@ -20,7 +21,8 @@
             //all the column names
             for($i = 0; $i < $dataSize; $i++){
                 $temp = $data[$i]->colName;
-                $query = $query.$temp.", ";
+                $this->lastTemp = $temp;
+                $query = $query.$temp.", ";                    
             }
             $query = substr_replace($query, "", -2);
             $query = $query.") values (";
