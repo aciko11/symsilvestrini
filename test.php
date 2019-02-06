@@ -11,13 +11,16 @@
     
     require 'Tables/Paziente.php';
     require 'Tables/tipo_.php';
+    require 'Tables/Ricovero.php';
 
     //clearing the table
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
+    $query = "delete from tipo_complicanza";
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
 
     //reference to the file
-    $file = "files/Cook database 27feb17.ods"; 
+    $file = "files/test.xlsx"; 
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
@@ -34,12 +37,13 @@
     $lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
     $rowsNumber = $sheet->getHighestDataRow();
     //it's the offset for the first line of data in the file
-    $rowOffset = 3;
+    $rowOffset = 1;
 
     echo($sheet->getCell('A'.$rowOffset)->getValue());
     $data = array();
     
-    /*$data[0] = $sheet->getCell('C'.$rowOffset)->getValue(); //nome
+    /*
+    $data[0] = $sheet->getCell('C'.$rowOffset)->getValue(); //nome
     $data[1] = $sheet->getCell('B'.$rowOffset)->getValue(); //cognome 
     $data[2] = $sheet->getCell('D'.$rowOffset)->getValue(); //dataNascita
     //$data[2] = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($data[2])); //converte il 
@@ -58,11 +62,26 @@
     $temp->insert($tempData, "paziente");
     */
 
-    //$paziente = new Paziente();
-    //$paziente->createData($sheet, $rowsNumber, $rowOffset);
+    $currentRow = array(array("idPaziente"=>"aaa"));
+    //echo($currentRow[0]['idPaziente']);
 
-    $tipo = new Tipo();
-    $tipo->createData($sheet, $rowsNumber, $rowOffset);
+    //Paziente.php only does 1 line of the database to do the others simply do a for cycle
+    $paziente = new Paziente();
+    $paziente->createData($sheet, $rowOffset);
+    $ricovero = new Ricovero();
+    $ricovero->createData($sheet, $rowOffset, $paziente);
+
+    echo($paziente->tempDataPaziente[7]->colName);
+    $size = sizeof($paziente->tempDataPaziente);
+    echo("array size = ".$size);
+    for ($i = 0; $i < $size; $i++){
+        if($paziente->tempDataPaziente[$i]->colName == "codiceDbCook"){
+            echo("dbCookValue".$paziente->tempDataPaziente[$i]->colValue."<br>");
+        }
+    }
+
+    //$tipo = new Tipo();
+    //$tipo->createData($sheet, $rowsNumber, $rowOffset);
 
     mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");

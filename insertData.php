@@ -37,6 +37,9 @@
 
             //execuiting query
             mysqli_query($connect, $query) or die (mysqli_error($connect));
+            $last_id = mysqli_insert_id($connect);
+
+            return $last_id;
         }
     }
     

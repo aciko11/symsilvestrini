@@ -2,46 +2,109 @@
 
     class Paziente{
 
-        function createData($sheet, $rowsNumber, $rowOffset){
+        public $tempDataPaziente = array();
+        public $lastPazienteId = null;
+        //$temp = new Column();
 
-            $tempData = array();
-            //$temp = new Column();
+        function createData($sheet, $rowOffset){
+
+            /*i have to change all the $this->tempDataPaziente with only tempData and then
+            pass it with $this->tempDataPaziente[] = $tempData like i have done with dataNascita
+            */
 
             $insert = new InsertData();
+            //temporary object that is gonna be passed to the class propriety $tempDataPaziente
+            //to create an array of objects
+            $tempData = new Column;
 
-            for($i = 0; $i < $rowsNumber; $i++){
+            //nome
+            $j = 0;
 
-                $tempData[0] = new Column;
-                $tempData[0]->colName = "nome";
-                $tempData[0]->colValue = $sheet->getCell('C'.$rowOffset)->getValue(); //nome
+            $tempData->colName = "nome";
+            $tempData->colValue = $sheet->getCell('C'.$rowOffset)->getValue();
+            $this->tempDataPaziente[] = $tempData;
 
-                $tempData[1] = new Column;
-                $tempData[1]->colName = "cognome";
-                $tempData[1]->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); //cognome 
+            //cognome
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "cognome";
+            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
+            $j++;
 
-                $tempData[2] = new Column;
-                $tempData[2]->colName = "dataNascita";
-                $tempData[2]->colValue = $sheet->getCell('D'.$rowOffset)->getValue(); //dataNascita
-                //$data[2] = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($data[2])); //converte in formato data il valore numerico ottenuto da getCell 
-                //echo($tempData[2]);
+            //dataNascita
+            $tempData->colName = "dataNascita";
+            $tempData->colValue = $sheet->getCell('D'.$rowOffset)->getValue();
+            $tempData->colValue = date("d-m-Y", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
+            echo("test0".$tempData->colValue);
+            //echo("test".$this->$tempDataPaziente[$j]->colValue);   
+            $this->tempDataPaziente[] = $tempData;
 
-                $tempData[3] = new Column;
-                $tempData[3]->colName = "sesso";
-                $tempData[3]->colValue = $sheet->getCell('BK'.$rowOffset)->getValue(); //sesso
-                
-                $tempData[4] = new Column;
-                $tempData[4]->colName = "altrePatologie";
-                $tempData[4]->colValue = $sheet->getCell('CF'.$rowOffset)->getValue(); //altrePatologie
+            //sesso
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "sesso";
+            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('BK'.$rowOffset)->getValue(); 
+            if($this->tempDataPaziente[$j]->colValue == 1)
+                $this->tempDataPaziente[$j]->colValue = "M";
+            else
+                $this->tempDataPaziente[$j]->colValue = "F";
+            $j++;
 
-                $tempData[5] = new Column;
-                $tempData[5]->colName = "codiceDbCook";
-                $tempData[5]->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
+            //dataInserimento
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "dataInserimento";
+            $this->tempDataPaziente[$j]->colValue = date("d-m-Y", time());    
+            $j++;
 
-                $insert->insert($tempData, "paziente");
-                $rowOffset++;
-            }
-           
+            //ultimaModifica
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "ultimaModifica";
+            $this->tempDataPaziente[$j]->colValue = time();   
+            $j++;
+
+            /*
+            //migrato
+            $tempDataPaziente[$j] = new Column;
+            $tempDataPaziente[$j]->colName = "migrato";
+            $tempDataPaziente[$j]->colValue = 1;
+            $j++;
+            */
+
+            //fumatore
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "fumatore";
+            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('BO'.$rowOffset)->getValue(); 
+            if($this->tempDataPaziente[$j]->colValue == 1)
+                $this->tempDataPaziente[$j]->colValue = "SI"; 
+            else 
+                $this->tempDataPaziente[$j]->colValue = "NO";
+            $j++;
+
+            //codiceDbCook
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "codiceDbCook";
+            $this->tempDataPaziente[$j]->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
+            $j++;
+
+            //migratoDbCook
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "migratoDbCook";
+            $this->tempDataPaziente[$j]->colValue =  1; 
+            $j++;                
+
+            //altrePatologie
+            $this->tempDataPaziente[$j] = new Column;
+            $this->tempDataPaziente[$j]->colName = "altrePatologie";
+            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('CF'.$rowOffset)->getValue();
+            $j++;
+            
+            /*$currentRowData[$i]['idPaziente'] = "test".$i;
+            echo($currentRowData[$i]['idPaziente']);
+            echo("?");*/    //it works 
+
+            $lastPazienteId = $insert->insert($this->tempDataPaziente, "paziente");
+            echo("<br>".$lastPazienteId."<br>");
         }
+           
+        
 
     }
 

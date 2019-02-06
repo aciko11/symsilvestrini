@@ -12,15 +12,13 @@
 
             $rowOffset = 1;
             //tipo_complicanza
-            $i = 0;
-            foreach($letters as $column){
+            $lenght = sizeof($letters);
+            for($i = 0; $i < $lenght; $i++){
                 $tempData[$i] = new Column;
                 $tempData[$i]->colName = "descrizione";
-                $tempData[$i]->colValue = $sheet->getCell($column.$rowOffset)->getValue();
-
-                $insert->insert($tempData, "paziente");
-                $i++;
+                $tempData[$i]->colValue = $sheet->getCell($letters[$i].$rowOffset)->getValue();
             }
+            $insert->insert($tempData, "tipo_complicanza");
 
         }
     }
