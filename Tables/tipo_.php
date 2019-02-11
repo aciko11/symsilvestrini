@@ -2,6 +2,8 @@
 
     class Tipo{
 
+        public $tempDataTipo = array();
+
         function createData($sheet, $rowsNumber, $rowOffset){
 
             $tempData = array();
@@ -20,6 +22,25 @@
             }
             $insert->insert($tempData, "tipo_complicanza");
 
+        }
+        
+        function tipo_complicanza($sheet, $rowOffset){
+            $tempData = new Column;
+            $tempData->colName = "descrizione";
+            $tempData->colValue = "endoleakTipo1";
+            $this->tempDataTipo[] = $tempData;
+
+            $tempData = new Column;
+            $tempData->colName = "descrizione";
+            $tempData->colValue = "endoleakTipo2";
+            $this->tempDataTipo[] = $tempData;
+
+            $tempData = new Column;
+            $tempData->colName = "descrizione";
+            $tempData->colValue = "endoleakTipo3";
+            $this->tempDataTipo[] = $tempData;
+
+            $insert->insert($tthis->tempDataTipo, "tipo_complicanza");
         }
     }
 

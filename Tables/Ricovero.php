@@ -2,35 +2,51 @@
 
     class Ricovero{
         public $tempDataRicovero = array();
-        public $lastRicoveroId = null;
-        function createData($sheet, $rowOffset, $paziente){
+        public $id = null;
+        function createData($sheet, $rowOffset, $idPaziente, $num){
             $insert = new InsertData();
           
-            $j = 0;
-            $tempDataRicovero[$j] = new Column;
-            $tempDataRicovero[$j]->colName = "idPaziente";
-            $tempDataRicovero[$j]->colValue = $paziente->lastPazienteId;    //devo mettere il riferimento all'id del paziente corrente //idPaziente
-            $j++;
 
-            $tempDataRicovero[$j] = new Column;
-            $tempDataRicovero[$j]->colName = "dataIngresso";
-            $tempDataRicovero[$j]->colValue = $sheet->getCell('E'.$rowOffset)->getValue();    //dataIngresso
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "idPaziente";
+            $tempData->colValue = $idPaziente;    //devo mettere il riferimento all'id del paziente corrente //idPaziente
+            $this->tempDataRicovero[] = $tempData;
 
-            $tempDataRicovero[$j] = new Column;
-            $tempDataRicovero[$j]->colName = "dataDimissione";
-            //$tempDataRicovero[$j]->colValue = date("d-m-Y", "");
-            $tempDataRicovero[$j]->colValue = $tempDataRicovero[$j-1] + 
+
+            $tempData = new Column;
+            $tempData->colName = "dataIngresso";
+            if($num == 0){
+                $dataIngresso = $sheet->getCell('E'.$rowOffset)->getValue();    //dataIngresso
+                $tempData->colValue = $dataIngresso;
+            }
+            else{
+                $dataIngresso = $sheet->getCell('G'.$rowOffset)->getValue();    //dataIngresso
+                $tempData->colValue = $dataIngresso;
+            }          
+            $this->tempDataRicovero[] = $tempData;
+
+
+            $tempData = new Column;
+            $tempData->colName = "dataDimissione";
+            if($num == 0){
+                //$tempData->colValue = date("d-m-Y", "");
+                $tempData->colValue = $dataIngresso + 
                 $sheet->getCell('FY'.$rowOffset)->getValue();
-            $j++;
+                
+            }
+            else{
+                $tempData->colValue = "00/00/0000";
+            }
+            $this->tempDataRicovero[] = $tempData;           
 
-            $tempDataRicovero[$j] = new Column;
-            $tempDataRicovero[$j]->colName = "migrato";
-            $tempDataRicovero[$j]->colValue = 1;
-            $j++;
+
+            $tempData = new Column;
+            $tempData->colName = "migrato";
+            $tempData->colValue = 1;
+            $this->tempDataRicovero[] = $tempData;
             
-            $lastRicoveroId = $insert->insert($tempDataRicovero, "ricovero");
-            echo("<br>lastRicoveroId = ".$lastRicoveroId);
+            $id = $insert->insert($this->tempDataRicovero, "ricovero");
+            echo("<br>lastRicoveroId = ".$id);
         }
     }
 

@@ -1,6 +1,5 @@
 <?php
 
-    require "connection.php";
 
     global $connect;
 
@@ -26,8 +25,6 @@
 
     $query = "SET FOREIGN_KEY_CHECKS=1;";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
-
-    mysqli_close($connect);
 
 
 ?>

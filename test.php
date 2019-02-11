@@ -1,5 +1,7 @@
 <?php
- 
+    
+    #region Import
+
     //PHPExcel class
     require 'PHPExcel-1.8/Classes/PHPExcel.php';
     //connection class
@@ -12,12 +14,27 @@
     require 'Tables/Paziente.php';
     require 'Tables/tipo_.php';
     require 'Tables/Ricovero.php';
+    require 'Tables/Intervento.php';
 
-    //clearing the table
+    require 'Scripts/FindMatch.php';
+
+    #endregion
+
+    #region Clearing Tables
+
+    //if imported all the tables will be cleared 
+    //require 'clearAllTables.php';
+
+    $query = "delete from ricovero";
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
+    $query = "delete from intervento";
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from tipo_complicanza";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
+    #endregion
+    
 
     //reference to the file
     $file = "files/test.xlsx"; 
@@ -67,9 +84,21 @@
 
     //Paziente.php only does 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
-    $paziente->createData($sheet, $rowOffset);
+    $paziente->createData($sheet, $rowOffset, 0);
+
     $ricovero = new Ricovero();
-    $ricovero->createData($sheet, $rowOffset, $paziente);
+    $ricovero->createData($sheet, $rowOffset, $paziente->id, 0);
+
+    $intervento = new Intervento();
+    $intervento->createData($sheet, $rowOffset, $paziente->id, $ricovero->id, 0);
+
+    if($sheet->getCell('F'.$rowOffset)->getValue() == 1){
+        $ricovero2 = new Ricovero;
+        $ricovero2->createData($sheet, $rowOffset, $paziente->id, 1);
+
+        $intervento2 = new Intervento;
+        $intervento2->createData($sheet, $rowOffset, $paziente->id, $ricovero2->id, 1);
+    }
 
     echo($paziente->tempDataPaziente[7]->colName);
     $size = sizeof($paziente->tempDataPaziente);
@@ -80,8 +109,50 @@
         }
     }
 
-    //$tipo = new Tipo();
-    //$tipo->createData($sheet, $rowsNumber, $rowOffset);
+    $tipo = new Tipo;
+    $tipo->tipo_complicanza($sheet, $rowOffset);
+
+    //ricontrollare email SALTA TUTTO GUARDA APPUNTI
+    //columns J-K-L -> leakTipo#Intraop
+    if($sheet->getCell("J".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo1";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+    }
+    if($sheet->getCell("K".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo2";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+    }
+    if($sheet->getCell("L".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo3";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+    }
+
+
+    //columns V-W-X -> LeakTipo#
+    if($sheet->getCell("V".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo1";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+    }
+    if($sheet->getCell("W".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo3";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+    }
+    if($sheet->getCell("X".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "endoleakTipo2";
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+    }
 
     mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");

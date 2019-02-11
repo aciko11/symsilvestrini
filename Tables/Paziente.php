@@ -3,10 +3,10 @@
     class Paziente{
 
         public $tempDataPaziente = array();
-        public $lastPazienteId = null;
+        public $id = null;
         //$temp = new Column();
 
-        function createData($sheet, $rowOffset){
+        function createData($sheet, $rowOffset, $num){
 
             /*i have to change all the $this->tempDataPaziente with only tempData and then
             pass it with $this->tempDataPaziente[] = $tempData like i have done with dataNascita
@@ -15,22 +15,23 @@
             $insert = new InsertData();
             //temporary object that is gonna be passed to the class propriety $tempDataPaziente
             //to create an array of objects
-            $tempData = new Column;
+            
 
             //nome
-            $j = 0;
-
+            $tempData = new Column;
             $tempData->colName = "nome";
             $tempData->colValue = $sheet->getCell('C'.$rowOffset)->getValue();
             $this->tempDataPaziente[] = $tempData;
 
+
             //cognome
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "cognome";
-            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "cognome";
+            $tempData->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
+            $this->tempDataPaziente[] = $tempData;
 
             //dataNascita
+            $tempData = new Column;
             $tempData->colName = "dataNascita";
             $tempData->colValue = $sheet->getCell('D'.$rowOffset)->getValue();
             $tempData->colValue = date("d-m-Y", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
@@ -39,26 +40,26 @@
             $this->tempDataPaziente[] = $tempData;
 
             //sesso
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "sesso";
-            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('BK'.$rowOffset)->getValue(); 
-            if($this->tempDataPaziente[$j]->colValue == 1)
-                $this->tempDataPaziente[$j]->colValue = "M";
+            $tempData = new Column;
+            $tempData->colName = "sesso";
+            $tempData->colValue = $sheet->getCell('BK'.$rowOffset)->getValue(); 
+            if($tempData->colValue == "1")
+                $tempData->colValue = "M";
             else
-                $this->tempDataPaziente[$j]->colValue = "F";
-            $j++;
+                $tempData->colValue = "F";
+            $this->tempDataPaziente[] = $tempData;
 
             //dataInserimento
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "dataInserimento";
-            $this->tempDataPaziente[$j]->colValue = date("d-m-Y", time());    
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "dataInserimento";
+            $tempData->colValue = date("d-m-Y", time());    
+            $this->tempDataPaziente[] = $tempData;
 
             //ultimaModifica
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "ultimaModifica";
-            $this->tempDataPaziente[$j]->colValue = time();   
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "ultimaModifica";
+            $tempData->colValue = time();   
+            $this->tempDataPaziente[] = $tempData;
 
             /*
             //migrato
@@ -69,39 +70,39 @@
             */
 
             //fumatore
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "fumatore";
-            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('BO'.$rowOffset)->getValue(); 
-            if($this->tempDataPaziente[$j]->colValue == 1)
-                $this->tempDataPaziente[$j]->colValue = "SI"; 
+            $tempData = new Column;
+            $tempData->colName = "fumatore";
+            $tempData->colValue = $sheet->getCell('BO'.$rowOffset)->getValue(); 
+            if($tempData->colValue == 1)
+                $tempData->colValue = "SI"; 
             else 
-                $this->tempDataPaziente[$j]->colValue = "NO";
-            $j++;
+                $tempData->colValue = "NO";
+            $this->tempDataPaziente[] = $tempData;
 
             //codiceDbCook
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "codiceDbCook";
-            $this->tempDataPaziente[$j]->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "codiceDbCook";
+            $tempData->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
+            $this->tempDataPaziente[] = $tempData;
 
             //migratoDbCook
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "migratoDbCook";
-            $this->tempDataPaziente[$j]->colValue =  1; 
-            $j++;                
+            $tempData = new Column;
+            $tempData->colName = "migratoDbCook";
+            $tempData->colValue =  1; 
+            $this->tempDataPaziente[] = $tempData;                
 
             //altrePatologie
-            $this->tempDataPaziente[$j] = new Column;
-            $this->tempDataPaziente[$j]->colName = "altrePatologie";
-            $this->tempDataPaziente[$j]->colValue = $sheet->getCell('CF'.$rowOffset)->getValue();
-            $j++;
+            $tempData = new Column;
+            $tempData->colName = "altrePatologie";
+            $tempData->colValue = $sheet->getCell('CF'.$rowOffset)->getValue();
+            $this->tempDataPaziente[] = $tempData;
             
             /*$currentRowData[$i]['idPaziente'] = "test".$i;
             echo($currentRowData[$i]['idPaziente']);
             echo("?");*/    //it works 
 
-            $lastPazienteId = $insert->insert($this->tempDataPaziente, "paziente");
-            echo("<br>".$lastPazienteId."<br>");
+            $this->id = $insert->insert($this->tempDataPaziente, "paziente");
+            echo("<br>".$this->id."<br>");
         }
            
         
