@@ -15,6 +15,7 @@
     require 'Tables/tipo_.php';
     require 'Tables/Ricovero.php';
     require 'Tables/Intervento.php';
+    require 'Tables/Decesso.php';
 
     require 'Scripts/FindMatch.php';
 
@@ -25,14 +26,14 @@
     //if imported all the tables will be cleared 
     //require 'clearAllTables.php';
 
-    $query = "delete from ricovero";
-    mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from intervento";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
-    $query = "delete from paziente";
+    $query = "delete from ricovero";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
-    $query = "delete from tipo_complicanza";
-    mysqli_query($connect, $query) or die(mysqli_error($connect));
+    //$query = "delete from paziente";
+    //mysqli_query($connect, $query) or die(mysqli_error($connect));
+    //$query = "delete from tipo_complicanza";
+    //mysqli_query($connect, $query) or die(mysqli_error($connect));
     #endregion
     
 
@@ -109,50 +110,83 @@
         }
     }
 
-    $tipo = new Tipo;
-    $tipo->tipo_complicanza($sheet, $rowOffset);
+    //$tipo = new Tipo;
+    //$tipo->tipo_complicanza($sheet, $rowOffset);
+    //gli endoleak già ci sono
 
     //ricontrollare email SALTA TUTTO GUARDA APPUNTI
     //columns J-K-L -> leakTipo#Intraop
     if($sheet->getCell("J".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo1";
+        $descComplicanza = "endoleak di tipo Ia";   //ti tipo Ia o Ib???
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
     }
     if($sheet->getCell("K".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo2";
+        $descComplicanza = "endoleak di tipo II"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
     }
     if($sheet->getCell("L".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo3";
+        $descComplicanza = "endoleak di tipo III"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true);
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
+    }
+    if($sheet->getCell("P".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "Migrazione graft"; 
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
+    }
+    if($sheet->getCell("Q".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "Occlusione di branca iliaca"; 
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, false);
+    }
+    if($sheet->getCell("R".$rowOffset)->getValue() == 1){
+        $complicanza = new Complicanza;
+        $descComplicanza = "sanguinamento"; 
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, false);
     }
 
 
     //columns V-W-X -> LeakTipo#
+    $dataComplicanza = "";
+
+    //setting the date for each case
+    if($sheet->getCell("FT".$rowOffset)->getValue() == 1){
+        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue + 29;
+    }
+    elseif($temp = $sheet->getCell("Z".$rowOffset)->getValue() != "#NULL!"){
+        $dataComplicanza = $temp;
+    }
+    else{
+        $dataComplicanza = $sheet->getCell("Y".$rowOffset)->getValue();
+    }
+
+    //creating the data for the columns V-W-X
     if($sheet->getCell("V".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo1";
-        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+        $descComplicanza = "endoleak di tipo Ia";
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
     if($sheet->getCell("W".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo3";
-        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+        $descComplicanza = "endoleak di tipo II";
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
     if($sheet->getCell("X".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleakTipo2";
-        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
-        $complicanza->createData($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false);
+        $descComplicanza = "endoleak di tipo III";
+        $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
+
+    $decesso = new Decesso;
+    $decesso->create($sheet, $rowOffset, $paziente->id);
 
     mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");

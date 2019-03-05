@@ -9,7 +9,7 @@
 
             $tempData = new Column;
             $tempData->colName = "idPaziente";
-            $tempData->colValue = $idPaziente;    //devo mettere il riferimento all'id del paziente corrente //idPaziente
+            $tempData->colValue = $idPaziente;  //rif idPaziente
             $this->tempDataRicovero[] = $tempData;
 
 
@@ -35,7 +35,7 @@
                 
             }
             else{
-                $tempData->colValue = "00/00/0000";
+                $tempData->colValue = "00-00-0000";
             }
             $this->tempDataRicovero[] = $tempData;           
 
@@ -45,8 +45,8 @@
             $tempData->colValue = 1;
             $this->tempDataRicovero[] = $tempData;
             
-            $id = $insert->insert($this->tempDataRicovero, "ricovero");
-            echo("<br>lastRicoveroId = ".$id);
+            $this->id = $insert->insert($this->tempDataRicovero, "ricovero");
+            echo("lastRicoveroId = ".$this->id."<br>");
         }
     }
 

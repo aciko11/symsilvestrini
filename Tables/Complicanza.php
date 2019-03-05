@@ -2,38 +2,50 @@
 
     class Complicanza{
         public $tempDataComplicanza;
+        public $id;
 
-        function createData($sheet, $rowOffset, $descComplicanza, $idIntervento, $dataInizio, $intraOp){
+        function create($sheet, $rowOffset, $descComplicanza, $idIntervento, $dataInizio, $intraOp, $protesiRelata){
             $insert = new InsertData;
             $findMatch = new FindMatch;
 
-            $tempData = new Column;
-                       
+            $tempData = new Column;                       
             $tempData->colName = "idTipoComplicanza";
-            $idComplicanza = $findMatch->idTipoPatologia($descComplicanza);
+            $idComplicanza = $findMatch->idTipoComplicanza($descComplicanza);
             $tempData->colValue = $idComplicanza;
             $this->tempDataComplicanza[] = $tempData;
 
+            $tempData = new Column;
             $tempData->colName = "idIntervento";
             $tempData->colValue = $idIntervento;
             $this->tempDataComplicanza[] = $tempData;
 
+            $tempData = new Column;
             $tempData->colName = "intraOperatoria";
             if($intraOp){
                 $tempData->colValue = 1;
             }
             else{
                 $tempData->colValue = 0;
-            }                      
+            }                              
             $this->tempDataComplicanza[] = $tempData;
 
+            $tempData = new Column;
             $tempData->colName = "protesiRelata";
-            $tempData->colValue = 1;
+            if($protesiRelata){
+                $tempData->colValue = 1;
+            }
+            else{
+                $tempData->colValue = 0;
+            }
             $this->tempDataComplicanza[] = $tempData;
 
+            $tempData = new Column;
             $tempData->colName = "dataInizio";
             $tempData->colValue = $dataInizio;
             $this->tempDataComplicanza[] = $tempData;
+
+            $this->id = $insert->insert($this->tempDataComplicanza, "complicanza");
+            echo("<br>".$this->id."<br>");
         }
 
     }

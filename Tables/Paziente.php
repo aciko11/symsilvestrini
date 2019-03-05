@@ -16,18 +16,16 @@
             //temporary object that is gonna be passed to the class propriety $tempDataPaziente
             //to create an array of objects
             
+            //cognome
+            $tempData = new Column;
+            $tempData->colName = "cognome";
+            $tempData->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
+            $this->tempDataPaziente[] = $tempData;
 
             //nome
             $tempData = new Column;
             $tempData->colName = "nome";
             $tempData->colValue = $sheet->getCell('C'.$rowOffset)->getValue();
-            $this->tempDataPaziente[] = $tempData;
-
-
-            //cognome
-            $tempData = new Column;
-            $tempData->colName = "cognome";
-            $tempData->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
             $this->tempDataPaziente[] = $tempData;
 
             //dataNascita
@@ -58,16 +56,16 @@
             //ultimaModifica
             $tempData = new Column;
             $tempData->colName = "ultimaModifica";
-            $tempData->colValue = time();   
+            $tempData->colValue = date("d-m-Y", time());   
             $this->tempDataPaziente[] = $tempData;
 
-            /*
+            
             //migrato
-            $tempDataPaziente[$j] = new Column;
-            $tempDataPaziente[$j]->colName = "migrato";
-            $tempDataPaziente[$j]->colValue = 1;
-            $j++;
-            */
+            $tempData = new Column;
+            $tempData->colName = "migrato";
+            $tempData->colValue = 1;
+            $this->tempDataPaziente[] = $tempData;
+            
 
             //fumatore
             $tempData = new Column;
@@ -82,7 +80,7 @@
             //codiceDbCook
             $tempData = new Column;
             $tempData->colName = "codiceDbCook";
-            $tempData->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
+            $tempData->colValue =  $sheet->getCell('A'.$rowOffset)->getValue(); 
             $this->tempDataPaziente[] = $tempData;
 
             //migratoDbCook
@@ -97,9 +95,6 @@
             $tempData->colValue = $sheet->getCell('CF'.$rowOffset)->getValue();
             $this->tempDataPaziente[] = $tempData;
             
-            /*$currentRowData[$i]['idPaziente'] = "test".$i;
-            echo($currentRowData[$i]['idPaziente']);
-            echo("?");*/    //it works 
 
             $this->id = $insert->insert($this->tempDataPaziente, "paziente");
             echo("<br>".$this->id."<br>");

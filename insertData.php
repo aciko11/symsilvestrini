@@ -1,10 +1,8 @@
 <?php
 
 
-
-
     class InsertData{
-        
+        var $MYSQL_ERROR_CODE_DUPLICATE_ENTRY = 1062;
         var $lastTemp = "";
 
         //$data has to be an array of Column. Column is a structure with 2 properties: colName and colValue
@@ -38,7 +36,10 @@
             echo("<br>".$query."<br>");
 
             //execuiting query
-            mysqli_query($connect, $query) or die (mysqli_error($connect));
+            mysqli_query($connect, $query);
+            if(mysqli_error($connect) == $this->MYSQL_ERROR_CODE_DUPLICATE_ENTRY){
+                echo(mysqli_error($connect));
+            }
             $last_id = mysqli_insert_id($connect);
 
             return $last_id;
