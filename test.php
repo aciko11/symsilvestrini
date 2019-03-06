@@ -15,6 +15,7 @@
     require 'Tables/tipo_.php';
     require 'Tables/Ricovero.php';
     require 'Tables/Intervento.php';
+    require 'Tables/Complicanza.php';
     require 'Tables/Decesso.php';
 
     require 'Scripts/FindMatch.php';
@@ -26,10 +27,10 @@
     //if imported all the tables will be cleared 
     //require 'clearAllTables.php';
 
-    $query = "delete from intervento";
-    mysqli_query($connect, $query) or die(mysqli_error($connect));
-    $query = "delete from ricovero";
-    mysqli_query($connect, $query) or die(mysqli_error($connect));
+    //$query = "delete from intervento";
+    //mysqli_query($connect, $query) or die(mysqli_error($connect));
+    //$query = "delete from ricovero";
+    //mysqli_query($connect, $query) or die(mysqli_error($connect));
     //$query = "delete from paziente";
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
     //$query = "delete from tipo_complicanza";
@@ -114,11 +115,10 @@
     //$tipo->tipo_complicanza($sheet, $rowOffset);
     //gli endoleak già ci sono
 
-    //ricontrollare email SALTA TUTTO GUARDA APPUNTI
     //columns J-K-L -> leakTipo#Intraop
     if($sheet->getCell("J".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo Ia";   //ti tipo Ia o Ib???
+        $descComplicanza = "endoleak di tipo Ia";   //da cambiare in futuro
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
     }

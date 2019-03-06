@@ -14,12 +14,12 @@
             $tempData->colName = "data";
             if($num == 0){
                 $tempData->colValue = $sheet->getCell('E'.$rowOffset)->getValue();    //data intervento
-                $tempData->colValue = date("d-m-Y", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
                 echo("test1".$tempData->colValue);
             }
             else{
                 $tempData->colValue = $sheet->getCell('G'.$rowOffset)->getValue();    //data reintervento
-                $tempData->colValue = date("d-m-Y", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
             }           
             $this->tempDataIntervento[] = $tempData;
 
@@ -31,7 +31,7 @@
                 $tempData->colValue = $findMatch->idMedico($tempMedico);    //idChirurgo
             }
             else{
-                $tempData->colValue = null;
+                $tempData->colValue = $findMatch->idMedico(null);    //idChirurgo
             } 
             $this->tempDataIntervento[] = $tempData;           
 

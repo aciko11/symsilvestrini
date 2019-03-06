@@ -1,7 +1,7 @@
 <?php
 
     class Complicanza{
-        public $tempDataComplicanza;
+        public $tempDataComplicanza = array();
         public $id;
 
         function create($sheet, $rowOffset, $descComplicanza, $idIntervento, $dataInizio, $intraOp, $protesiRelata){

@@ -17,7 +17,8 @@
             $tempData = new Column;
             $tempData->colName = "data";
             if($sheet->getCell('AD'.$rowOffset)->getValue() == 1){
-                $tempData->colValue = $sheet->getCell('AE'.$rowOffset)->getValue();
+                $dataDecesso = $sheet->getCell('AE'.$rowOffset)->getValue();
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataDecesso));
             }
             else{
                 //$tempData->colValue = $dataUltimoAccertamento;

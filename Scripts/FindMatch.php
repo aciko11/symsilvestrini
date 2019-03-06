@@ -81,6 +81,7 @@
 
             $query = "SELECT id FROM tipo_complicanza WHERE descrizione = '$complicanza'";
             $id = $this->getValue($query, "id");
+            return $id;
         }
 
         function idAccertamento($tempValue){

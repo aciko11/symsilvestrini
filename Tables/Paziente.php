@@ -32,7 +32,7 @@
             $tempData = new Column;
             $tempData->colName = "dataNascita";
             $tempData->colValue = $sheet->getCell('D'.$rowOffset)->getValue();
-            $tempData->colValue = date("d-m-Y", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
+            $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
             echo("test0".$tempData->colValue);
             //echo("test".$this->$tempDataPaziente[$j]->colValue);   
             $this->tempDataPaziente[] = $tempData;
@@ -77,6 +77,7 @@
                 $tempData->colValue = "NO";
             $this->tempDataPaziente[] = $tempData;
 
+            /*
             //codiceDbCook
             $tempData = new Column;
             $tempData->colName = "codiceDbCook";
@@ -87,7 +88,8 @@
             $tempData = new Column;
             $tempData->colName = "migratoDbCook";
             $tempData->colValue =  1; 
-            $this->tempDataPaziente[] = $tempData;                
+            $this->tempDataPaziente[] = $tempData;  
+            */              
 
             //altrePatologie
             $tempData = new Column;

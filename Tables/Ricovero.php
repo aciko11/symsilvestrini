@@ -17,11 +17,11 @@
             $tempData->colName = "dataIngresso";
             if($num == 0){
                 $dataIngresso = $sheet->getCell('E'.$rowOffset)->getValue();    //dataIngresso
-                $tempData->colValue = $dataIngresso;
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataIngresso));
             }
             else{
                 $dataIngresso = $sheet->getCell('G'.$rowOffset)->getValue();    //dataIngresso
-                $tempData->colValue = $dataIngresso;
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataIngresso));
             }          
             $this->tempDataRicovero[] = $tempData;
 
@@ -30,12 +30,13 @@
             $tempData->colName = "dataDimissione";
             if($num == 0){
                 //$tempData->colValue = date("d-m-Y", "");
-                $tempData->colValue = $dataIngresso + 
-                $sheet->getCell('FY'.$rowOffset)->getValue();
+                $dataDimissione = $dataIngresso + 
+                    $sheet->getCell('FY'.$rowOffset)->getValue();
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataDimissione));
                 
             }
             else{
-                $tempData->colValue = "00-00-0000";
+                $tempData->colValue = "0000-00-00";
             }
             $this->tempDataRicovero[] = $tempData;           
 
