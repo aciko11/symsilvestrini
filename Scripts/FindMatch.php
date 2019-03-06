@@ -6,65 +6,65 @@
             #region if
 
             if($tempValue == "CAO"){
-
+                $tempValue = "Prof. P.Cao";
             }
             elseif($tempValue == "CAO/CARLINI"){
-                $tempValue = "CAO";
+                $tempValue = "Prof. P.Cao";
             }
             elseif($tempValue == "PROF.P CAO"){
-                $tempValue = "CAO";
+                $tempValue = "Prof. P.Cao";
             }
             elseif($tempValue == "CARLINI"){
-
+                $tempValue = "Dott.  Carlini";
             }
             elseif($tempValue == "CARLNI"){
-                $tempValue = "CARLINI";
+                $tempValue = "Dott.  Carlini";
             }
             elseif($tempValue == "CARLINI/DE RANGO"){
-                $tempValue = "CARLINI";
+                $tempValue = "Dott.  Carlini";
             }
             elseif($tempValue == "CERI"){
-                $tempValue = "CIERI";
+                $tempValue = "Dott. Cieri";
             }
             elseif($tempValue == "CIERI"){
-
+                $tempValue = "Dott. Cieri";
             }
             elseif($tempValue == "COSCARELLA"){
 
             }
             elseif($tempValue == "GIORDANO"){
-
+                $tempValue = "Dott.  Giordano";
             }
             elseif($tempValue == "IACONO"){
 
             }
             elseif($tempValue == "LENTI"){
-
+                $tempValue = "Dott. Lenti";
             }
             elseif($tempValue == "PARENTE"){
-
+                $tempValue = "Dott. Parente";
             }
             elseif($tempValue == "PARLANI"){
-
+                $tempValue = "Dott. Parlani";
             }
             elseif($tempValue == "ROMANO"){
-
+                $tempValue = "Dott. Romano";
             }
             elseif($tempValue == "TAVOLINI"){
 
             }
             elseif($tempValue == "VERZINI"){
-
+                $tempValue = "Dott. Verzini";
             }
             elseif($tempValue == "VARZINI"){
-                $tempValue = "VERZINI";
+                $tempValue = "Dott. Verzini";
             }
             else{
                 $tempValue = "migrato-ND";
             }
             #endregion
            
-            $query = "SELECT id FROM medico WHERE cognome = '$tempValue'";
+            $query = "SELECT id FROM medico WHERE nome = '$tempValue'";
             $id = $this->getValue($query, "id");
             return $id;
         }
@@ -96,16 +96,16 @@
                 //chiedere!
             }
             elseif($tempValue == "DATAB"){
-                $tempValue = "TEL";
+                $tempValue = "Controllo Telefonico";
             }
             elseif($tempValue == "DBASE"){
-                $tempValue = "TEL";
+                $tempValue = "Controllo Telefonico";
             }
             elseif($tempValue == "eco"){
-                $tempValue = "ECO";
+                $tempValue = "Ecografia";
             }
             elseif($tempValue == "eco*"){
-                $tempValue = "ECO";
+                $tempValue = "Ecografia";
             }
             elseif($tempValue == "ECORI"){
                 //chiedere!
@@ -114,7 +114,7 @@
                 $tempValue = "RX";
             }
             elseif($tempValue == "ECOtc"){
-                $tempValue = "TAC";
+                $tempValue = "TC";
             }
             elseif($tempValue == "RICOV"){
                 //chiedere!
@@ -123,10 +123,16 @@
                 $tempValue = "RX";
             }
             elseif($tempValue == "TC"){
-                $tempValue = "TAC";
+                $tempValue = "TC";
             }
             elseif($tempValue == "TEL"){
-                
+                $tempValue = "Controllo Telefonico";
+            }
+            elseif($tempValue == "tel"){
+                $tempValue = "Controllo Telefonico";
+            }
+            else{
+                $tempValue = "migrato-ND";
             }
             #endregion
 
@@ -141,6 +147,44 @@
             $id = $this->getValue($query, "id");
             return $id;
 
+        }
+
+        function idTipoDecesso($column){
+            $decesso = null;
+
+            #region if
+            if($column == "AF"){
+                $decesso = "Aortica"; //email "tutto da decidere"
+            }
+            elseif($column == "AI"){
+                $decesso = "Cardiaca";
+            }
+            elseif($column == "AJ"){
+                $decesso = "Cerebrovascolari";
+            }
+            elseif($column == "AK"){
+                $decesso = "Polmonari";
+            }
+            elseif($column == "AL"){
+                $decesso = "Gastrointestinali";
+            }
+            elseif($column == "AM"){
+                $decesso = "Renali";
+            }
+            elseif($column == "AN"){
+                $decesso = "Cancro";
+            }
+            elseif($column == "AO"){
+                $decesso = "Altro";
+            }
+            elseif($column == "AP"){
+                $decesso = "Rottura AAA";
+            }
+            #endregion
+
+            $query = "SELECT id FROM causa_decesso WHERE descrizione = '$decesso'";
+            $id = $this->getValue($query, "id");
+            return $id;
         }
 
         function getValue($query, $assocName){

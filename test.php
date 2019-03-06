@@ -16,6 +16,7 @@
     require 'Tables/Ricovero.php';
     require 'Tables/Intervento.php';
     require 'Tables/Complicanza.php';
+    require 'Tables/Accertamento.php';
     require 'Tables/Decesso.php';
 
     require 'Scripts/FindMatch.php';
@@ -39,7 +40,8 @@
     
 
     //reference to the file
-    $file = "files/test.xlsx"; 
+    $file = "files/Cook database 27feb17.xlsx"; 
+    //$file = "files/test.xlsx";
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
@@ -58,48 +60,27 @@
     //it's the offset for the first line of data in the file
     $rowOffset = 1;
 
-    echo($sheet->getCell('A'.$rowOffset)->getValue());
-    $data = array();
-    
-    /*
-    $data[0] = $sheet->getCell('C'.$rowOffset)->getValue(); //nome
-    $data[1] = $sheet->getCell('B'.$rowOffset)->getValue(); //cognome 
-    $data[2] = $sheet->getCell('D'.$rowOffset)->getValue(); //dataNascita
-    //$data[2] = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($data[2])); //converte il 
-    echo($data[2]);
-    $data[3] = $sheet->getCell('BK'.$rowOffset)->getValue();    //sesso  
-    $data[4] = $sheet->getCell('CF'.$rowOffset)->getValue(); //altrePatologie
-    $data[5] = $sheet->getCell('A'.$rowOffset)->getValue(); //codiceDbCook
-    $data[6] = 1;   //migratoDbCook */
+    //this has to stay out of the for
+    $tipo_decesso = new Tipo;
+    $tipo_decesso->tipo_decesso($sheet, $rowOffset);
 
-    /*
-    $tempData = array();
-    $tempData[0] = new Column();
-    $tempData[0]->colName = "nome";
-    $tempData[0]->colValue = "abc";
-    $temp = new insertData();
-    $temp->insert($tempData, "paziente");
-    */
-
-    $currentRow = array(array("idPaziente"=>"aaa"));
-    //echo($currentRow[0]['idPaziente']);
-
+    for($rowOffset = 3; $rowOffset<=$rowsNumber; $rowOffset++){
     //Paziente.php only does 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
     $paziente->createData($sheet, $rowOffset, 0);
 
     $ricovero = new Ricovero();
-    $ricovero->createData($sheet, $rowOffset, $paziente->id, 0);
+    $ricovero->create($sheet, $rowOffset, $paziente->id, 1);
 
     $intervento = new Intervento();
-    $intervento->createData($sheet, $rowOffset, $paziente->id, $ricovero->id, 0);
+    $intervento->create($sheet, $rowOffset, $paziente->id, $ricovero->id, 1);
 
     if($sheet->getCell('F'.$rowOffset)->getValue() == 1){
         $ricovero2 = new Ricovero;
-        $ricovero2->createData($sheet, $rowOffset, $paziente->id, 1);
+        $ricovero2->create($sheet, $rowOffset, $paziente->id, 2);
 
         $intervento2 = new Intervento;
-        $intervento2->createData($sheet, $rowOffset, $paziente->id, $ricovero2->id, 1);
+        $intervento2->create($sheet, $rowOffset, $paziente->id, $ricovero2->id, 2);
     }
 
     echo($paziente->tempDataPaziente[7]->colName);
@@ -168,7 +149,7 @@
         $dataComplicanza = $sheet->getCell("Y".$rowOffset)->getValue();
     }
 
-    //creating the data for the columns V-W-X
+    //columns V-W-X -> endoleakTipo#
     if($sheet->getCell("V".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo Ia";
@@ -185,9 +166,38 @@
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
 
-    $decesso = new Decesso;
-    $decesso->create($sheet, $rowOffset, $paziente->id);
+    //accertamento
+    $accertamento = new Accertamento;
+    $accertamento->create($sheet, $rowOffset, $paziente->id);
 
+    //decesso
+    $deathColumns = array("AF", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP");
+    foreach($deathColumns as $column){
+        $cell = $sheet->getCell($column.$rowOffset)->getValue();
+        if($cell == 1){
+            $decesso = new Decesso;
+            $decesso->create($sheet, $rowOffset, $paziente->id, $column);
+        }
+    }
+
+    //reintervento2
+    $check = $sheet->getCell('AU'.$rowOffset)->getValue();
+    if($check == 1){
+        $ricovero3 = new Ricovero;
+        $ricovero3->create($sheet, $rowOffset, $paziente->id, 3);
+
+        $intervento3 = new Intervento;
+        $intervento3->create($sheet, $rowOffset, $paziente->id, $ricovero3->id, 3);
+    }
+
+    //complicanza obesità
+    /*$check = $sheet->getCell('CJ'.$rowOffset)->getValue();
+    if($chek == 1){
+        $patologia = new Patologia;
+        $patologia->create();
+    }*/
+
+    }
     mysqli_close($connect) or die(mysqli_error($connect));
     echo("done");
     

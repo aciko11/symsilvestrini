@@ -31,10 +31,14 @@
             //dataNascita
             $tempData = new Column;
             $tempData->colName = "dataNascita";
-            $tempData->colValue = $sheet->getCell('D'.$rowOffset)->getValue();
-            $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
-            echo("test0".$tempData->colValue);
-            //echo("test".$this->$tempDataPaziente[$j]->colValue);   
+            $dataNascita = $sheet->getCell('D'.$rowOffset)->getValue();
+            echo($dataNascita);
+            if($dataNascita == "#NULL!"){
+                $tempData->colValue = "0000-00-00";
+            }
+            else{
+                $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataNascita));
+            }            
             $this->tempDataPaziente[] = $tempData;
 
             //sesso
@@ -50,13 +54,13 @@
             //dataInserimento
             $tempData = new Column;
             $tempData->colName = "dataInserimento";
-            $tempData->colValue = date("d-m-Y", time());    
+            $tempData->colValue = date("Y-m-d", time());    
             $this->tempDataPaziente[] = $tempData;
 
             //ultimaModifica
             $tempData = new Column;
             $tempData->colName = "ultimaModifica";
-            $tempData->colValue = date("d-m-Y", time());   
+            $tempData->colValue = date("Y-m-d", time());   
             $this->tempDataPaziente[] = $tempData;
 
             

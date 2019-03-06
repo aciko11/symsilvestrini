@@ -44,8 +44,9 @@
             $tempData->colValue = $dataInizio;
             $this->tempDataComplicanza[] = $tempData;
 
-            $this->id = $insert->insert($this->tempDataComplicanza, "complicanza");
-            echo("<br>".$this->id."<br>");
+            $this->id = $idComplicanza;
+            $insert->insert($this->tempDataComplicanza, "complicanza");
+            echo($this->id."<br>");
         }
 
     }

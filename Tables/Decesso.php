@@ -4,7 +4,7 @@
         public $id;
         public $tempDataDecesso;
 
-        function create($sheet, $rowOffset, $idPaziente){
+        function create($sheet, $rowOffset, $idPaziente, $column){
             $insert = new InsertData;
             $findMatch = new FindMatch;
 
@@ -27,7 +27,8 @@
 
             $tempData = new Column;
             $tempData->colName = "causa";
-            $tempData->colValue = null; //email "tutto da decidere"
+            $idDecesso = $findMatch->idTipoDecesso($column);
+            $tempData->colValue = $idDecesso;
             $this->tempDataDecesso[] = $tempData;
 
             $tempData = new Column;
@@ -43,7 +44,8 @@
             $this->tempDataDecesso[] = $tempData;
             */
 
-            $this->id = $insert->insert($this->tempDataDecesso, "Decesso");
+            $insert->insert($this->tempDataDecesso, "Decesso");
+            $this->id = $idPaziente;
             echo("LastDecessoId: ".$this->id);
         }
     }

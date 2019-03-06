@@ -12,13 +12,11 @@
             $tempData->colName = "descrizione";
             $tempData->colValue = "endoleakTipo1";
             $this->tempDataTipo = $tempData;
-            $insert->insert($this->tempDataTipo, "tipo_complicanza");
 
             $tempData = new Column;
             $tempData->colName = "descrizione";
             $tempData->colValue = "endoleakTipo2";
             $this->tempDataTipo = $tempData;
-            $insert->insert($this->tempDataTipo, "tipo_complicanza");
 
             $tempData = new Column;
             $tempData->colName = "descrizione";
@@ -45,41 +43,54 @@
         }
 
         function tipo_decesso($sheet, $rowOffset){ //chiedere se se questi nominativi vanno bene
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Aortic"; //441
+            global $connect;
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Cardiac";    //410
+            $this->tempDataTipo[] = "Aortica"; //441
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Cerebrovasc";    //436
+            $this->tempDataTipo[] = "Cardiaca";    //410
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Pulmonary";  //482.9 se trovo polmonite 491.21 altrimenti
+            $this->tempDataTipo[] = "Cerebrovascolari";    //436
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Gastrointestinal";   //capitolo 9 
+            $this->tempDataTipo[] = "Polmonari";  //482.9 se trovo polmonite 491.21 altrimenti
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Renal";  //585
+            $this->tempDataTipo[] = "Gastrintestinali";   //capitolo 9 
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Cancer"; //capitolo2 
+            $this->tempDataTipo[] = "Renali";  //585
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Other";
+            $this->tempDataTipo[] = "Cancro"; //capitolo2
 
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "AAArupture"; //441.3
+            $this->tempDataTipo[] = "Altro";
+ 
+            $this->tempDataTipo[] = "Rottura AAA";   //441.3
+            
+            foreach($this->tempDataTipo as $value){
+
+                $check = "SELECT * FROM causa_decesso WHERE descrizione = '$value'";
+                $result = mysqli_query($connect, $check);
+
+                if(mysqli_num_rows($result) > 0){
+                    $row = mysqli_fetch_assoc($result);
+                    foreach($row as $field){
+                        echo($field);
+                    }
+                    echo($value." è già presente nel database <br>");
+                }
+                else{
+
+                    $query = "INSERT INTO causa_decesso (id, descrizione) VALUES ('', '$value')";               
+                    mysqli_query($connect, $query);
+
+                    if($error = mysqli_error($connect)){
+                        echo($query."  ".$error);
+                    }
+                    else{
+                        echo($query."<br>");
+                    }
+
+                }
+                
+            }
+            
         }
     }
 
