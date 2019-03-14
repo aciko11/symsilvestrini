@@ -22,7 +22,8 @@
 
             $tempData = new Column;
             $tempData->colName = "data";
-            $tempData->colValue = $sheet->getCell("Y".$rowOffset)->getValue();
+            $dateAccertamento = $sheet->getCell("Y".$rowOffset)->getValue();
+            $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dateAccertamento));
             $this->tempDataAccertamento[] = $tempData;
             
             $this->id = $insert->insert($this->tempDataAccertamento, "accertamento");

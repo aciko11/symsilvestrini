@@ -3,6 +3,7 @@
     class Intervento{
 
         public $tempDataIntervento = array();
+        public $date;
         public $id = null;
 
         function create($sheet, $rowOffset, $idPaziente, $idRicovero, $num){
@@ -24,7 +25,8 @@
             elseif($num == 3){
                 $tempData->colValue = $sheet->getCell('AV'.$rowOffset)->getValue();    //data reintervento
                 $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
-            }           
+            }
+            $this->date = $tempData->colValue;           
             $this->tempDataIntervento[] = $tempData;
 
 
@@ -112,7 +114,7 @@
             $tempData = new Column();
             $tempData->colName = "esito";   //deve essere ribattezzato in successoTecnico colonna FP
             if($num == 1){
-                $tempData->colValue = $sheet->getCell('GJ'.$rowOffset)->getValue();   //esito
+                $tempData->colValue = $sheet->getCell('FP'.$rowOffset)->getValue();   //esito
             }
             elseif($num == 2){
                 $tempData->colValue = null;

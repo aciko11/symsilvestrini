@@ -47,13 +47,13 @@
 
             $this->tempDataTipo[] = "Aortica"; //441
 
-            $this->tempDataTipo[] = "Cardiaca";    //410
+            $this->tempDataTipo[] = "Cardiovascolari";    //410
 
             $this->tempDataTipo[] = "Cerebrovascolari";    //436
 
             $this->tempDataTipo[] = "Polmonari";  //482.9 se trovo polmonite 491.21 altrimenti
 
-            $this->tempDataTipo[] = "Gastrintestinali";   //capitolo 9 
+            $this->tempDataTipo[] = "Gastrntestinali";   //capitolo 9 
 
             $this->tempDataTipo[] = "Renali";  //585
 
@@ -69,11 +69,9 @@
                 $result = mysqli_query($connect, $check);
 
                 if(mysqli_num_rows($result) > 0){
-                    $row = mysqli_fetch_assoc($result);
-                    foreach($row as $field){
-                        echo($field);
-                    }
+
                     echo($value." è già presente nel database <br>");
+                    
                 }
                 else{
 

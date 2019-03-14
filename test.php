@@ -18,8 +18,10 @@
     require 'Tables/Complicanza.php';
     require 'Tables/Accertamento.php';
     require 'Tables/Decesso.php';
+    require 'Tables/Patologia.php';
 
     require 'Scripts/FindMatch.php';
+    //require 'Scripts/clearTables.php';
 
     #endregion
 
@@ -37,11 +39,10 @@
     //$query = "delete from tipo_complicanza";
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
     #endregion
-    
 
     //reference to the file
-    $file = "files/Cook database 27feb17.xlsx"; 
-    //$file = "files/test.xlsx";
+    //$file = "files/Cook database 27feb17.xlsx"; 
+    $file = "files/test.xlsx";
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
@@ -64,7 +65,7 @@
     $tipo_decesso = new Tipo;
     $tipo_decesso->tipo_decesso($sheet, $rowOffset);
 
-    for($rowOffset = 3; $rowOffset<=$rowsNumber; $rowOffset++){
+    for($rowOffset = 1; $rowOffset<=$rowsNumber; $rowOffset++){
     //Paziente.php only does 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
     $paziente->createData($sheet, $rowOffset, 0);
@@ -136,11 +137,11 @@
 
 
     //columns V-W-X -> LeakTipo#
-    $dataComplicanza = "";
+    $dataComplicanza;
 
     //setting the date for each case
     if($sheet->getCell("FT".$rowOffset)->getValue() == 1){
-        $dataComplicanza = $intervento->tempDataIntervento[0]->colValue + 29;
+        $dataComplicanza = date("Y-m-d", strtotime($intervento->date.' + 29 days')); //$intervento->date + 29;
     }
     elseif($temp = $sheet->getCell("Z".$rowOffset)->getValue() != "#NULL!"){
         $dataComplicanza = $temp;
@@ -191,11 +192,12 @@
     }
 
     //complicanza obesità
-    /*$check = $sheet->getCell('CJ'.$rowOffset)->getValue();
-    if($chek == 1){
-        $patologia = new Patologia;
-        $patologia->create();
-    }*/
+    $check = $sheet->getCell('CJ'.$rowOffset)->getValue();
+    if($check == 1){
+        $_patologia = mysqli_real_escape_string($connect, "OBESITA'");
+        $patologia = new Patologia;       
+        $patologia->create($sheet, $rowOffset, $paziente->id, $_patologia);
+    }
 
     }
     mysqli_close($connect) or die(mysqli_error($connect));

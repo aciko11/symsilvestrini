@@ -19,13 +19,15 @@
             //cognome
             $tempData = new Column;
             $tempData->colName = "cognome";
-            $tempData->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
+            //$tempData->colValue = $sheet->getCell('B'.$rowOffset)->getValue(); 
+            $tempData->colValue = "cognome";
             $this->tempDataPaziente[] = $tempData;
 
             //nome
             $tempData = new Column;
             $tempData->colName = "nome";
-            $tempData->colValue = $sheet->getCell('C'.$rowOffset)->getValue();
+            //$tempData->colValue = $sheet->getCell('C'.$rowOffset)->getValue();
+            $tempData->colValue = "nome";
             $this->tempDataPaziente[] = $tempData;
 
             //dataNascita

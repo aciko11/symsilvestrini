@@ -72,6 +72,7 @@
         function idTipoPatologia($patologia){
 
             $query = "SELECT id FROM tipo_patologia WHERE descrizione = '$patologia'";
+            echo($query);
             $id = $this->getValue($query, "id");
             return $id;
 
@@ -157,7 +158,7 @@
                 $decesso = "Aortica"; //email "tutto da decidere"
             }
             elseif($column == "AI"){
-                $decesso = "Cardiaca";
+                $decesso = "Cardiovascolari";
             }
             elseif($column == "AJ"){
                 $decesso = "Cerebrovascolari";
