@@ -188,6 +188,33 @@
             return $id;
         }
 
+        function idAtc($column){
+            $code = "";
+            if($column == "ASAPost"){
+                $code = "B01AC06";
+            }
+            elseif($column == "TiklidPost"){
+                $code = "B01AC05";
+            }
+            elseif($column == "PlavixPost"){
+                $code = "B01AC04";
+            }
+            elseif($column == "Anticoagulanti"){
+                $code = "B01AF";
+            }
+            elseif($column == "CoumadinPost"){
+                $code = "B01AA03";
+            }
+            elseif($column == "EBPMPost"){
+                $code = "B01AB";
+            }
+
+            $query = "SELECT id FROM atc WHERE class = '$code'";
+            $id = $this->getValue($query, "id");
+            return $id;
+        }
+
+        //this method gets called by the others to perform the select query
         function getValue($query, $assocName){
             global $connect;
             

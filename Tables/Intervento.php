@@ -6,7 +6,7 @@
         public $date;
         public $id = null;
 
-        function create($sheet, $rowOffset, $idPaziente, $idRicovero, $num){
+        function create($sheet, $rowOffset, $idPaziente, $idRicovero, $num, $idPrecedente){
             $insert = new InsertData();
             $findMatch = new FindMatch;
             
@@ -29,7 +29,8 @@
             $this->date = $tempData->colValue;           
             $this->tempDataIntervento[] = $tempData;
 
-
+    
+            //id del chirurgo
             $tempData = new Column();
             $tempData->colName = "idChirurgo";
             if($num == 1){
@@ -42,7 +43,16 @@
             elseif($num == 3){
                 $tempData->colValue = $findMatch->idMedico(null);    //idChirurgo
             }
-            $this->tempDataIntervento[] = $tempData;           
+
+            //riferimento all'intervento precedente. Per il primo intervento non c'è bisogno di fare nulla
+            //per il secondo e il terzo mi faccio passare gli id corrispondenti
+            
+            if($num != 1){
+                $tempData = new Column();
+                $tempData->colName = "idPrecedente";
+                $tempData->colValue = $idPrecedente;    //idPrecedente
+            }
+            $this->tempDataIntervento[] = $tempData;
 
             //riferimento id del paziente
             $tempData = new Column();

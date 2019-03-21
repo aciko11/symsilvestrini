@@ -19,6 +19,7 @@
     require 'Tables/Accertamento.php';
     require 'Tables/Decesso.php';
     require 'Tables/Patologia.php';
+    require 'Tables/Terapia.php';
 
     require 'Scripts/FindMatch.php';
     //require 'Scripts/clearTables.php';
@@ -58,14 +59,15 @@
     $lastColString = $sheet->getHighestDataColumn();    //returns the last column with data in string format eg. DH
     $lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
     $rowsNumber = $sheet->getHighestDataRow();
-    //it's the offset for the first line of data in the file
-    $rowOffset = 1;
 
     //this has to stay out of the for
     $tipo_decesso = new Tipo;
     $tipo_decesso->tipo_decesso($sheet, $rowOffset);
 
-    for($rowOffset = 1; $rowOffset<=$rowsNumber; $rowOffset++){
+
+    for($rowOffset = 2; $rowOffset<=$rowsNumber; $rowOffset++){
+
+
     //Paziente.php only does 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
     $paziente->createData($sheet, $rowOffset, 0);
@@ -74,14 +76,14 @@
     $ricovero->create($sheet, $rowOffset, $paziente->id, 1);
 
     $intervento = new Intervento();
-    $intervento->create($sheet, $rowOffset, $paziente->id, $ricovero->id, 1);
+    $intervento->create($sheet, $rowOffset, $paziente->id, $ricovero->id, 1, null);
 
     if($sheet->getCell('F'.$rowOffset)->getValue() == 1){
         $ricovero2 = new Ricovero;
         $ricovero2->create($sheet, $rowOffset, $paziente->id, 2);
 
         $intervento2 = new Intervento;
-        $intervento2->create($sheet, $rowOffset, $paziente->id, $ricovero2->id, 2);
+        $intervento2->create($sheet, $rowOffset, $paziente->id, $ricovero2->id, 2, $intervento->id);
     }
 
     echo($paziente->tempDataPaziente[7]->colName);
@@ -100,7 +102,7 @@
     //columns J-K-L -> leakTipo#Intraop
     if($sheet->getCell("J".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo Ia";   //da cambiare in futuro
+        $descComplicanza = "endoleak di tipo I-migrato-ND";   //da cambiare in futuro
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
     }
@@ -151,21 +153,23 @@
     }
 
     //columns V-W-X -> endoleakTipo#
+    /*
     if($sheet->getCell("V".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo Ia";
+        $descComplicanza = "endoleak di tipo I-migrato-ND";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
     if($sheet->getCell("W".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo II";
+        $descComplicanza = "endoleak di tipo III";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
     if($sheet->getCell("X".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo III";
+        $descComplicanza = "endoleak di tipo II";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
     }
+    */
 
     //accertamento
     $accertamento = new Accertamento;
@@ -188,8 +192,52 @@
         $ricovero3->create($sheet, $rowOffset, $paziente->id, 3);
 
         $intervento3 = new Intervento;
-        $intervento3->create($sheet, $rowOffset, $paziente->id, $ricovero3->id, 3);
+        $intervento3->create($sheet, $rowOffset, $paziente->id, $ricovero3->id, 3, $intervento2->id);
     }
+
+    //terapie colonne da BC a BJ
+    $check = $sheet->getCell('BC'.$rowOffset)->getValue();
+    if($check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BC1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
+    $check = $sheet->getCell('BH'.$rowOffset)->getValue();
+    if($check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BH1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
+    $check = $sheet->getCell('BI'.$rowOffset)->getValue();
+    if($check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BI1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
+    $check1 = $sheet->getCell('BG'.$rowOffset)->getValue();
+    if($check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BG1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
+    $check2 = $sheet->getCell('BJ'.$rowOffset)->getValue();
+    if($check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BJ1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
+    $check = $sheet->getCell('BF'.$rowOffset)->getValue();
+    if($check1 == 0 && $check2 == 0 && $check == 1){
+        $terapia = new Terapia;       
+        $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BF1')->getValue(), 
+            $intervento->id, $intervento->date);
+    }
+
 
     //complicanza obesità
     $check = $sheet->getCell('CJ'.$rowOffset)->getValue();
@@ -198,6 +246,9 @@
         $patologia = new Patologia;       
         $patologia->create($sheet, $rowOffset, $paziente->id, $_patologia);
     }
+
+    
+
 
     }
     mysqli_close($connect) or die(mysqli_error($connect));
