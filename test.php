@@ -61,6 +61,7 @@
     $rowsNumber = $sheet->getHighestDataRow();
 
     //this has to stay out of the for
+    $rowOffset = 2;
     $tipo_decesso = new Tipo;
     $tipo_decesso->tipo_decesso($sheet, $rowOffset);
 

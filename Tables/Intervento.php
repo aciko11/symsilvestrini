@@ -165,6 +165,27 @@
             $tempData->colName = "migrato";
             $tempData->colValue = 1;   //migrato
             $this->tempDataIntervento[] = $tempData;
+
+
+            $tempData = new Column();
+            $tempData->colName = "tipoAnestesia";
+
+            if($num == 1){
+
+                if($sheet->getCell('EI'.$rowOffset)->getValue() == 1){  //anestesia generale
+                    $tempData->colValue = "generale";
+                }
+                elseif($sheet->getCell('EJ'.$rowOffset)->getValue() == 1){  //anestesia regionale
+                    $tempData->colValue = "regionale";
+                }
+                elseif($sheet->getCell('EJ'.$rowOffset)->getValue() == 1){  //anestesia locale
+                    $tempData->colValue = "locale";
+                }
+                else{
+                    $tempData->colValue = "migrato-ND";
+                }
+            }
+            $this->tempDataIntervento[] = $tempData;
             
             $this->id = $insert->insert($this->tempDataIntervento, "Intervento");
             echo("lastInterventoId = ".$this->id."<br>");
