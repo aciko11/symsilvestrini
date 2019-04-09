@@ -192,6 +192,8 @@ class Visita{
         $tempData->colName = "collIliacoComDx_CalcioNonCirconf";    //da ricontrollare, come sopra
         $tempData->colValue = $sheet->getCell('EA'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
+
+        
     }
 }
 

@@ -172,13 +172,13 @@
 
             if($num == 1){
 
-                if($sheet->getCell('EI'.$rowOffset)->getValue() == 1){  //anestesia generale
+                if($sheet->getCell('EG'.$rowOffset)->getValue() == 1){  //anestesia generale
                     $tempData->colValue = "generale";
                 }
-                elseif($sheet->getCell('EJ'.$rowOffset)->getValue() == 1){  //anestesia regionale
+                elseif($sheet->getCell('EH'.$rowOffset)->getValue() == 1){  //anestesia regionale
                     $tempData->colValue = "regionale";
                 }
-                elseif($sheet->getCell('EJ'.$rowOffset)->getValue() == 1){  //anestesia locale
+                elseif($sheet->getCell('EI'.$rowOffset)->getValue() == 1){  //anestesia locale
                     $tempData->colValue = "locale";
                 }
                 else{
