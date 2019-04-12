@@ -36,15 +36,15 @@
             echo("<br>".$query."<br>");
 
             //execuiting query
-            mysqli_query($connect, $query);
-            $error = mysqli_error($connect);
+            mysqli_query($connect, $query) or die(mysqli_error($connect));
+            /*$error = mysqli_error($connect);
             
             if ($error == $this->MYSQL_ERROR_CODE_DUPLICATE_ENTRY){
                 echo($error);
             }
             else if($error){
                 die($error);
-            }
+            }*/
 
             $last_id = mysqli_insert_id($connect);
 

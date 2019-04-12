@@ -5,6 +5,7 @@
         public $id;
 
         function create($sheet, $rowOffset, $descComplicanza, $idIntervento, $dataInizio, $intraOp, $protesiRelata){
+            global $lineSeparator;
             $insert = new InsertData;
             $findMatch = new FindMatch;
 
@@ -46,7 +47,7 @@
 
             $this->id = $idComplicanza;
             $insert->insert($this->tempDataComplicanza, "complicanza");
-            echo($this->id."<br>");
+            echo($this->id."<br>".$lineSeparator);
         }
 
     }

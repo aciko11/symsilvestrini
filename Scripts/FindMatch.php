@@ -72,7 +72,7 @@
         function idTipoPatologia($patologia){
 
             $query = "SELECT id FROM tipo_patologia WHERE descrizione = '$patologia'";
-            echo($query);
+            echo("<br>".$query);
             $id = $this->getValue($query, "id");
             return $id;
 
@@ -124,6 +124,9 @@
                 $tempValue = "RX";
             }
             elseif($tempValue == "TC"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "Tac"){
                 $tempValue = "TC";
             }
             elseif($tempValue == "TEL"){

@@ -6,6 +6,7 @@
         public $idAtc = null;
 
         function create($sheet, $rowOffset, $idPaziente, $descAtc, $idIntervento, $dataIntervento){
+            global $lineSeparator;
             $insert = new InsertData();
             $findMatch = new FindMatch;
 
@@ -35,7 +36,7 @@
             $this->idPaziente = $idPaziente;
 
             $insert->insert($this->tempDataTerapia, "Terapia");
-            echo("lastTerapia idPaziente = ".$this->idPaziente.", idAtc = ".$this->idAtc."<br>");
+            echo("lastTerapia idPaziente = ".$this->idPaziente.", idAtc = ".$this->idAtc."<br>".$lineSeparator);
 
         }
     }

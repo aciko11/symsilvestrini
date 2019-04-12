@@ -5,9 +5,9 @@
         public $id = null;
 
         function create($sheet, $rowOffset, $idPaziente, $num){
+            global $lineSeparator;
             $insert = new InsertData();
           
-
             $tempData = new Column;
             $tempData->colName = "idPaziente";
             $tempData->colValue = $idPaziente;  //rif idPaziente
@@ -55,7 +55,7 @@
             $this->tempDataRicovero[] = $tempData;
             
             $this->id = $insert->insert($this->tempDataRicovero, "ricovero");
-            echo("lastRicoveroId = ".$this->id."<br>");
+            echo("lastRicoveroId = ".$this->id."<br>".$lineSeparator);
         }
     }
 

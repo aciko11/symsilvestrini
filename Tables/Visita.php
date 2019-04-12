@@ -4,6 +4,7 @@
         public $tempDataTerapia = array();
 
         function create($sheet, $rowOffset){
+            global $lineSeparator;
 
             $temp = $sheet->getCell('CO'.$rowOffset)->getValue();
             if($temp != "#NULL!"){

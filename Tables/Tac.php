@@ -1,10 +1,20 @@
 <?php
 
 
-class Visita{
+class Tac{
     public $tempDataTac = array();
+    public $id;
 
-    function create($sheet, $rowOffset){
+    function create($sheet, $rowOffset, $idAccertamento){
+        global $lineSeparator;
+        $insert = new InsertData;
+
+        //riferimento id accertamento
+        $tempData = new Column;
+        $tempData->colName = "id";
+        $tempData->colValue = $idAccertamento;
+        $this->tempDataTac[] = $tempData;
+        $this->id = $idAccertamento;
         
         //colonna CW
         $tempData = new Column;
@@ -36,11 +46,13 @@ class Visita{
         $tempData->colValue = $sheet->getCell('DA'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
+        /*
         //colonna DB
         $tempData = new Column;      
-        $tempData->colName = "aorta_DiamSopraRenale";   //controllare per sicurezza
+        $tempData->colName = "";   //"Diametro aorta" ma quale????
         $tempData->colValue = $sheet->getCell('DB'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
+        */
 
         //colonna DC
         $tempData = new Column;
@@ -135,15 +147,17 @@ class Visita{
 
         //colonna DR
         $tempData = new Column;
-        $tempData->colName = "iliacaEstDx_Occlus";  //da ricontrollare come sopra    
+        $tempData->colName = "iliacaEstSx_Occlus";  //da ricontrollare come sopra    
         $tempData->colValue = $sheet->getCell('DR'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
+        /*
         //colonna DS
         $tempData = new Column;
         $tempData->colName = "";    //CLASSIFICAZIONE????
         $tempData->colValue = $sheet->getCell('DS'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
+        */
 
         //colonna DT
         $tempData = new Column;
@@ -157,6 +171,7 @@ class Visita{
         $tempData->colValue = $sheet->getCell('DU'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
+        /*
         //colonna DV
         $tempData = new Column;
         $tempData->colName = "";    //angolazione iliaca dx
@@ -168,6 +183,7 @@ class Visita{
         $tempData->colName = "";    //angolazione iliaca sx
         $tempData->colValue = $sheet->getCell('DW'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
+        */
 
         //colonna DX
         $tempData = new Column;
@@ -193,6 +209,9 @@ class Visita{
         $tempData->colValue = $sheet->getCell('EA'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
+
+        $insert->insert($this->tempDataTac, "tac");
+        echo($this->id."<br>".$lineSeparator);
         
     }
 }

@@ -20,6 +20,7 @@
     require 'Tables/Decesso.php';
     require 'Tables/Patologia.php';
     require 'Tables/Terapia.php';
+    require 'Tables/Tac.php';
 
     require 'Scripts/FindMatch.php';
     //require 'Scripts/clearTables.php';
@@ -41,6 +42,9 @@
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
     #endregion
 
+
+    $lineSeparator = "------------------------------------------------------------------------------------------------------------------------------------------" . 
+        "---------------------------------------------------------------------------------------------";
     //reference to the file
     //$file = "files/Cook database 27feb17.xlsx"; 
     $file = "files/test.xlsx";
@@ -87,14 +91,12 @@
         $intervento2->create($sheet, $rowOffset, $paziente->id, $ricovero2->id, 2, $intervento->id);
     }
 
-    echo($paziente->tempDataPaziente[7]->colName);
-    $size = sizeof($paziente->tempDataPaziente);
-    echo("array size = ".$size);
+    /*$size = sizeof($paziente->tempDataPaziente);
     for ($i = 0; $i < $size; $i++){
         if($paziente->tempDataPaziente[$i]->colName == "codiceDbCook"){
             echo("dbCookValue".$paziente->tempDataPaziente[$i]->colValue."<br>");
         }
-    }
+    }*/
 
     //$tipo = new Tipo;
     //$tipo->tipo_complicanza($sheet, $rowOffset);
@@ -248,11 +250,16 @@
         $patologia->create($sheet, $rowOffset, $paziente->id, $_patologia);
     }
 
+    $accertamento2 = new Accertamento;
+    $accertamento2->createTacIntervento($sheet, $rowOffset, $paziente->id, $intervento->id);
+
+    $tac = new Tac;
+    $tac->create($sheet, $rowOffset, $accertamento2->id);
     
 
 
     }
     mysqli_close($connect) or die(mysqli_error($connect));
-    echo("done");
+    echo("<br>done");
     
 ?>

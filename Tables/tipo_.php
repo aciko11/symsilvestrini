@@ -70,7 +70,7 @@
 
                 if(mysqli_num_rows($result) > 0){
 
-                    echo($value." è già presente nel database <br>");
+                    echo("<br>".$value." è già presente nel database <br>");
                     
                 }
                 else{
@@ -82,7 +82,7 @@
                         echo($query."  ".$error);
                     }
                     else{
-                        echo($query."<br>");
+                        echo("<br>".$query."<br>");
                     }
 
                 }

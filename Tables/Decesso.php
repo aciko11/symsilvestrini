@@ -5,6 +5,7 @@
         public $tempDataDecesso;
 
         function create($sheet, $rowOffset, $idPaziente, $column){
+            global $lineSeparator;
             $insert = new InsertData;
             $findMatch = new FindMatch;
 
@@ -46,7 +47,7 @@
 
             $insert->insert($this->tempDataDecesso, "Decesso");
             $this->id = $idPaziente;
-            echo("LastDecessoId: ".$this->id);
+            echo("LastDecessoId: ".$this->id."<br>".$lineSeparator);
         }
     }
 

@@ -7,14 +7,8 @@
         //$temp = new Column();
 
         function createData($sheet, $rowOffset, $num){
-
-            /*i have to change all the $this->tempDataPaziente with only tempData and then
-            pass it with $this->tempDataPaziente[] = $tempData like i have done with dataNascita
-            */
-
+            global $lineSeparator;
             $insert = new InsertData();
-            //temporary object that is gonna be passed to the class propriety $tempDataPaziente
-            //to create an array of objects
             
             //cognome
             $tempData = new Column;
@@ -105,7 +99,7 @@
             
 
             $this->id = $insert->insert($this->tempDataPaziente, "paziente");
-            echo("<br>".$this->id."<br>");
+            echo($this->id."<br>".$lineSeparator);
         }
            
         

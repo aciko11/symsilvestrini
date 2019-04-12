@@ -7,6 +7,7 @@
         public $id = null;
 
         function create($sheet, $rowOffset, $idPaziente, $idRicovero, $num, $idPrecedente){
+            global $lineSeparator;
             $insert = new InsertData();
             $findMatch = new FindMatch;
             
@@ -16,7 +17,6 @@
             if($num == 1){
                 $tempData->colValue = $sheet->getCell('E'.$rowOffset)->getValue();    //data intervento
                 $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($tempData->colValue));
-                echo("test1".$tempData->colValue);
             }
             elseif($num == 2){
                 $tempData->colValue = $sheet->getCell('G'.$rowOffset)->getValue();    //data reintervento
@@ -185,10 +185,45 @@
                     $tempData->colValue = "migrato-ND";
                 }
             }
+            else{
+                $tempData->colValue = "migrato-ND";
+            }
             $this->tempDataIntervento[] = $tempData;
+
+            $value = $sheet->getCell('FJ'.$rowOffset)->getValue();
+            if($value != null){
+                $tempData = new Column;
+                $tempData->colName = "durata";            
+                $tempData->colValue = $value;
+                $this->tempDataIntervento[] = $tempData;
+            }
             
+            $value = $sheet->getCell('FM'.$rowOffset)->getValue();
+            if($value !== "#NULL!"){
+                $tempData = new Column;
+                $tempData->colName = "unitaGrTrasfuse";            
+                $tempData->colValue = $value;
+                $this->tempDataIntervento[] = $tempData;
+            }
+
+            $value = $sheet->getCell('FN'.$rowOffset)->getValue();
+            if($value !== "#NULL!"){
+                $tempData = new Column;
+                $tempData->colName = "mezzoDiContrasto";            
+                $tempData->colValue = $value;
+                $this->tempDataIntervento[] = $tempData;
+            }
+            
+            $value = $sheet->getCell('FO'.$rowOffset)->getValue();
+            if($value !== "#NULL!"){
+                $tempData = new Column;
+                $tempData->colName = "tempoDiscopia";            
+                $tempData->colValue = $value;
+                $this->tempDataIntervento[] = $tempData;
+            }
+
             $this->id = $insert->insert($this->tempDataIntervento, "Intervento");
-            echo("lastInterventoId = ".$this->id."<br>");
+            echo("lastInterventoId = ".$this->id."<br>".$lineSeparator);
         }
     }
 

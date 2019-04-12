@@ -5,7 +5,7 @@
         public $id;
 
         function create($sheet, $rowOffset, $idPaziente, $patologia){
-
+            global $lineSeparator;
             $insert = new InsertData();
             $findMatch = new FindMatch;
           
@@ -28,7 +28,7 @@
 
             $insert->insert($this->tempDataPatologia, "patologia");
             $this->id = $idTipoPatologia;
-            echo("lastPatologiaId = ".$this->id."<br>");
+            echo("lastPatologiaId = ".$this->id."<br>".$lineSeparator);
 
         }
     }
