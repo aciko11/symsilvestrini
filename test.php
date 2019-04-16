@@ -17,6 +17,9 @@
     require 'Tables/Intervento.php';
     require 'Tables/Complicanza.php';
     require 'Tables/Accertamento.php';
+    require 'Tables/Controllo_telefonico.php';
+    require 'Tables/Ecografia.php';
+    require 'Tables/Rx.php';
     require 'Tables/Decesso.php';
     require 'Tables/Patologia.php';
     require 'Tables/Terapia.php';
@@ -179,13 +182,38 @@
     $accertamento->create($sheet, $rowOffset, $paziente->id);
 
     //decesso
+    $inVita = 1;
     $deathColumns = array("AF", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP");
     foreach($deathColumns as $column){
         $cell = $sheet->getCell($column.$rowOffset)->getValue();
         if($cell == 1){
             $decesso = new Decesso;
             $decesso->create($sheet, $rowOffset, $paziente->id, $column);
+            $inVita = 0;
         }
+    }
+
+    $temp = $accertamento->tipoControllo;
+    if($temp == "Controllo Telefonico"){
+        //create new controllo telefonico
+        $controllo_telefonico = new Controllo_telefonico;
+        $controllo_telefonico->create($sheet, $rowOffset, $accertamento->id, $inVita);
+    }
+    else if($temp == "Ecografia"){
+        //create new ecografia
+        $ecografia = new Ecografia;
+        $ecografia->create($sheet, $rowOffset, $accertamento->id);
+    }
+    else if($temp == "Rx"){
+        //create new Rx
+        $rx = new Rx;
+        $rx->create($sheet, $rowOffset, $accertamento->id);
+    }
+    else if($temp == "TC"){
+        //create new Tac
+        //DA CONTROLLARE SE PUò ANDARE BENE
+        $tac0 = new Tac;
+        $tac0->create($sheet, $rowOffset, $accertamento->id);
     }
 
     //reintervento2

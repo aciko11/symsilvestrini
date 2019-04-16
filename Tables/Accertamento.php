@@ -4,6 +4,7 @@
 
         public $tempDataAccertamento = array();
         public $id;
+        public $tipoControllo;
 
         function create($sheet, $rowOffset, $idPaziente){
             global $lineSeparator;
@@ -12,8 +13,9 @@
 
             $tempData = new Column;
             $tempData->colName = "idTipoAccertamento";
-            $accertamento = $sheet->getCell('AA'.$rowOffset)->getValue();
-            $tempData->colValue = $findMatch->idAccertamento($accertamento);
+            $this->tipoControllo = $sheet->getCell('AA'.$rowOffset)->getValue();
+            $tempData->colValue = $findMatch->idAccertamento($this->tipoControllo);
+            $this->setTipoControllo($this->tipoControllo);
             $this->tempDataAccertamento[] = $tempData;
 
             $tempData = new Column;
@@ -53,6 +55,41 @@
             
             $this->id = $insert->insert($this->tempDataAccertamento, "accertamento");
             echo($this->id."<br>".$lineSeparator);
+        }
+
+        function setTipoControllo($tempValue){
+            if($tempValue == "clin"){
+                //chiedere!
+            }
+            elseif($tempValue == "CONV"){
+                //chiedere!
+            }
+            elseif($tempValue == "CUP"){
+                //chiedere!
+            }
+            elseif($tempValue == "DATAB" || $tempValue == "DBASE" || $tempValue == "TEL" || $tempValue == "tel"){
+                $tempValue = "Controllo Telefonico";
+            }
+            elseif($tempValue == "eco" || $tempValue == "eco*"){
+                $tempValue = "Ecografia";
+            }
+            elseif($tempValue == "ECORI"){
+                //chiedere!
+            }
+            elseif($tempValue == "ecorx" || $tempValue == "rxeco"){
+                $tempValue = "RX";
+            }
+            elseif($tempValue == "ECOtc" || $tempValue == "TC" || $tempValue == "Tac"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "RICOV"){
+                //chiedere!
+            }
+            else{
+                $tempValue = "migrato-ND";
+            }
+
+            $this->tipoControllo = $tempValue;
         }
 
     }
