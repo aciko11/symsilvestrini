@@ -33,7 +33,7 @@
             echo($this->id."<br>".$lineSeparator);
         }
 
-        function createTacIntervento($sheet, $rowOffset, $idPaziente, $dataIntervento){
+        function createTac($sheet, $rowOffset, $idPaziente, $date){
             global $lineSeparator;
             $insert = new insertData;
             $findMatch = new FindMatch;
@@ -50,7 +50,7 @@
 
             $tempData = new Column;
             $tempData->colName = "data";
-            $tempData->colValue = $dataIntervento;
+            $tempData->colValue = $date;
             $this->tempDataAccertamento[] = $tempData;
             
             $this->id = $insert->insert($this->tempDataAccertamento, "accertamento");

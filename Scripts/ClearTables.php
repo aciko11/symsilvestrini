@@ -7,6 +7,11 @@
 
     $connect = mysqli_connect(hostname, user, password, databaseName) or die(mysqli_error($connect));
 
+    $query = "SET FOREIGN_KEY_CHECKS = 0";
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
+
+
+
     $query = "delete from intervento";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from fattore_rischio";
@@ -15,6 +20,7 @@
     mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from visita";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
+
 
     //tipi di accertamento
     $query = "delete from tac";
@@ -41,6 +47,11 @@
     mysqli_query($connect, $query) or die(mysqli_error($connect));
     $query = "delete from paziente";
     mysqli_query($connect, $query) or die(mysqli_error($connect));
+    
+
+
+    mysqli_query($connect, $query) or die(mysqli_error($connect));
+    $query = "SET FOREIGN_KEY_CHECKS = 1";
     
     
     

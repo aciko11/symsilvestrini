@@ -214,6 +214,21 @@ class Tac{
         echo($this->id."<br>".$lineSeparator);
         
     }
+
+    function createBlank($sheet, $rowOffset, $idAccertamento){
+        global $lineSeparator;
+        $insert = new InsertData;
+
+        //riferimento id accertamento
+        $tempData = new Column;
+        $tempData->colName = "id";
+        $tempData->colValue = $idAccertamento;
+        $this->tempDataTac[] = $tempData;
+        $this->id = $idAccertamento;
+
+        $insert->insert($this->tempDataTac, "tac");
+        echo($this->id."<br>".$lineSeparator);
+    }
 }
 
 

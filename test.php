@@ -177,10 +177,6 @@
     }
     */
 
-    //accertamento
-    $accertamento = new Accertamento;
-    $accertamento->create($sheet, $rowOffset, $paziente->id);
-
     //decesso
     $inVita = 1;
     $deathColumns = array("AF", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP");
@@ -193,13 +189,23 @@
         }
     }
 
-    $temp = $accertamento->tipoControllo;
-    if($temp == "Controllo Telefonico"){
-        //create new controllo telefonico
-        $controllo_telefonico = new Controllo_telefonico;
-        $controllo_telefonico->create($sheet, $rowOffset, $accertamento->id, $inVita);
+    //accertamento TAC 
+    $accertamentoTac = new Accertamento;
+    $tempDate = $sheet->getCell("Z".$rowOffset)->getValue();
+    if($tempDate == "#NULL!"){
+        $tempDate = "0000-00-00";
     }
-    else if($temp == "Ecografia"){
+    $accertamentoTac->createTac($sheet, $rowOffset, $paziente->id, $tempDate);
+    $tacForAll = new Tac;
+    $tacForAll->createBlank($sheet, $rowOffset, $accertamentoTac->id);
+
+    //accertamento
+    $accertamento = new Accertamento;
+    $accertamento->create($sheet, $rowOffset, $paziente->id);
+
+    $temp = $accertamento->tipoControllo;
+    
+    if($temp == "Ecografia"){
         //create new ecografia
         $ecografia = new Ecografia;
         $ecografia->create($sheet, $rowOffset, $accertamento->id);
@@ -215,6 +221,13 @@
         $tac0 = new Tac;
         $tac0->create($sheet, $rowOffset, $accertamento->id);
     }
+    else if($temp == "Controllo Telefonico"){
+            //create new controllo telefonico
+            $controllo_telefonico = new Controllo_telefonico;
+            $controllo_telefonico->create($sheet, $rowOffset, $accertamento->id, $inVita);
+    }
+    
+    
 
     //reintervento2
     $check = $sheet->getCell('AU'.$rowOffset)->getValue();
@@ -279,7 +292,7 @@
     }
 
     $accertamento2 = new Accertamento;
-    $accertamento2->createTacIntervento($sheet, $rowOffset, $paziente->id, $intervento->id);
+    $accertamento2->createTac($sheet, $rowOffset, $paziente->id, $intervento->date);
 
     $tac = new Tac;
     $tac->create($sheet, $rowOffset, $accertamento2->id);
@@ -288,6 +301,6 @@
 
     }
     mysqli_close($connect) or die(mysqli_error($connect));
-    echo("<br>done");
+    echo("<br><br>!!!!!!!!!!!!!!!!!!!!!!!DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     
 ?>
