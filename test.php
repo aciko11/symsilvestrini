@@ -52,8 +52,9 @@
 
 
     //reference to the file
-    //$file = "files/Cook database 27feb17.xlsx"; 
-    $file = "files/test.xlsx";
+    $file = "files/Cook database 27feb17.xlsx"; 
+    //$file = "Cook database originale di Grazia con anche Nominativi.xlsx";
+    //$file = "files/test.xlsx";
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 
@@ -71,12 +72,12 @@
     $rowsNumber = $sheet->getHighestDataRow();  //returns the last row with data
 
     //this has to stay out of the for
-    $rowOffset = 2;
+    $rowOffset = 3;
     $tipo_decesso = new Tipo;
     $tipo_decesso->tipo_decesso($sheet, $rowOffset);
 
 
-    for($rowOffset = 2; $rowOffset<=$rowsNumber; $rowOffset++){
+    for($rowOffset = 3; $rowOffset<=$rowsNumber; $rowOffset++){
 
 
     //all the classes in /Tables only do 1 line of the database to do the others simply do a for cycle
@@ -185,7 +186,7 @@
     $deathColumns = array("AF", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP");
     foreach($deathColumns as $column){
         $cell = $sheet->getCell($column.$rowOffset)->getValue();
-        if($cell == 1){
+        if($cell == 1 && $inVita == 1){
             $decesso = new Decesso;
             $decesso->create($sheet, $rowOffset, $paziente->id, $column);
             $inVita = 0;
