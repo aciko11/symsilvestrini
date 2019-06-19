@@ -4,44 +4,6 @@
 
         public $tempDataTipo = array();
 
-        
-        function tipo_complicanza($sheet, $rowOffset){
-            $insert = new InsertData;
-            
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "endoleakTipo1";
-            $this->tempDataTipo = $tempData;
-
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "endoleakTipo2";
-            $this->tempDataTipo = $tempData;
-
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "endoleakTipo3";
-            $this->tempDataTipo = $tempData;
-            
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Migrazione graft";
-            $this->tempDataTipo = $tempData;
-
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Occlusione di branca iliaca";
-            $this->tempDataTipo = $tempData;
-
-            $tempData = new Column;
-            $tempData->colName = "descrizione";
-            $tempData->colValue = "Sanguinamento";
-            $this->tempDataTipo = $tempData;
-
-
-            $insert->insert($this->tempDataTipo, "tipo_complicanza");
-        }
-
         function tipo_decesso($sheet, $rowOffset){ //chiedere se se questi nominativi vanno bene
             global $connect;
 
@@ -58,36 +20,34 @@
             $this->tempDataTipo[] = "Renali";  //585
 
             $this->tempDataTipo[] = "Cancro"; //capitolo2
-
-            $this->tempDataTipo[] = "Altro";
  
             $this->tempDataTipo[] = "Rottura AAA";   //441.3
+
+            $this->tempDataTipo[] = "Altro";
             
+            //checking if the various types of deaths already exists in the database
             foreach($this->tempDataTipo as $value){
 
                 $check = "SELECT * FROM causa_decesso WHERE descrizione = '$value'";
                 $result = mysqli_query($connect, $check);
 
+                //if i get a result from the query then it means that it already exists
                 if(mysqli_num_rows($result) > 0){
 
-                    echo("<br>".$value." è già presente nel database <br>");
-                    
+                    echo("<br>".$value." è già presente nel database <br>");                   
                 }
                 else{
-
+                    
                     $query = "INSERT INTO causa_decesso (id, descrizione) VALUES ('', '$value')";               
-                    mysqli_query($connect, $query);
-
-                    if($error = mysqli_error($connect)){
-                        echo($query."  ".$error);
-                    }
-                    else{
-                        echo("<br>".$query."<br>");
-                    }
-
+                    mysqli_query($connect, $query) or die(mysqli_error($connect));
+                    echo("<br>".$query."<br>");
                 }
                 
             }
+
+
+
+
             
         }
     }

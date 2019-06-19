@@ -5,9 +5,9 @@
     //PHPExcel class
     require 'PHPExcel-1.8/Classes/PHPExcel.php';
     //connection class
-    require 'connection.php';
+    require 'Scripts/connection.php';
     //insert query class 
-    require 'insertData.php';
+    require 'Scripts/insertData.php';
     //column structure class
     require 'Classes/column.php';
     
@@ -33,7 +33,7 @@
     #region Clearing Tables
 
     //if imported all the tables will be cleared 
-    //require 'clearAllTables.php';
+    //require 'Scripts/clearAllTables.php';
 
     //$query = "delete from intervento";
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
@@ -43,11 +43,14 @@
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
     //$query = "delete from tipo_complicanza";
     //mysqli_query($connect, $query) or die(mysqli_error($connect));
+
     #endregion
 
-
+    //this is used for the output on the browser. It divides visually the various query 
     $lineSeparator = "------------------------------------------------------------------------------------------------------------------------------------------" . 
         "---------------------------------------------------------------------------------------------";
+
+
     //reference to the file
     //$file = "files/Cook database 27feb17.xlsx"; 
     //$file = "Cook database originale di Grazia con anche Nominativi.xlsx";
@@ -64,9 +67,9 @@
 
     //$lastRow = $sheet->getHighestRow();   
     //$lastCol = $sheet->getHighestColumn();
-    $lastColString = $sheet->getHighestDataColumn();    //returns the last column with data in string format eg. DH
-    $lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
-    $rowsNumber = $sheet->getHighestDataRow();
+    //$lastColString = $sheet->getHighestDataColumn();    //returns the last column with data, in string format eg. DH
+    //$lastColNumber = PHPExcel_Cell::columnIndexFromString($lastColString);  //converts the string into a number format
+    $rowsNumber = $sheet->getHighestDataRow();  //returns the last row with data
 
     //this has to stay out of the for
     $rowOffset = 3;
@@ -77,7 +80,7 @@
     for($rowOffset = 2; $rowOffset<=$rowsNumber; $rowOffset++){
 
 
-    //Paziente.php only does 1 line of the database to do the others simply do a for cycle
+    //all the classes in /Tables only do 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
     $paziente->createData($sheet, $rowOffset, 0);
 
@@ -109,7 +112,7 @@
     //columns J-K-L -> leakTipo#Intraop
     if($sheet->getCell("J".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
-        $descComplicanza = "endoleak di tipo I-migrato-ND";   //da cambiare in futuro
+        $descComplicanza = "endoleak di tipo I-migrato-ND";  
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
     }
