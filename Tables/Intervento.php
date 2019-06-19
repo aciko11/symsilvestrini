@@ -35,6 +35,7 @@
             $tempData->colName = "idChirurgo";
             if($num == 1){
                 $tempMedico = $sheet->getCell('EC'.$rowOffset)->getValue();
+                echo($tempMedico);
                 $tempData->colValue = $findMatch->idMedico($tempMedico);    //idChirurgo
             }
             elseif($num == 2){
@@ -221,6 +222,41 @@
                 $tempData->colValue = $value;
                 $this->tempDataIntervento[] = $tempData;
             }
+
+            $tempData = new Column;
+            $tempData->colName = "AccessoChirurgico";
+            $value = $sheet->getCell('EJ'.$rowOffset)->getValue();
+            $value = $findMatch->accesso($value);
+            if($value == "Dx"){
+                $temp = 0;
+            }
+            else{
+                $temp = 1;
+            }
+            $tempData->colValue = $value;
+            $this->tempDataIntervento[] = $tempData;
+
+            $tempData = new Column;
+            $tempData->colName = "AccessoPercutaneo";
+            $value = $sheet->getCell('EK'.$rowOffset)->getValue();
+            if ($value == 1){    //è dalla parte oppposta
+                if($temp == 0){
+                    $value = "Sx";
+                }
+                else{
+                    $value = "Dx";
+                }
+            }
+            else{   //dalla stessa parte
+                if($temp == 0){
+                    $value = "Dx";
+                }
+                else{
+                    $value = "Sx";
+                }
+            }
+            $tempData->colValue = $value;
+            $this->tempDataIntervento[] = $tempData;
 
             $this->id = $insert->insert($this->tempDataIntervento, "Intervento");
             echo("lastInterventoId = ".$this->id."<br>".$lineSeparator);

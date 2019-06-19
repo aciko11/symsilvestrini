@@ -14,8 +14,9 @@
             $tempData = new Column;
             $tempData->colName = "idTipoAccertamento";
             $this->tipoControllo = $sheet->getCell('AA'.$rowOffset)->getValue();
+            echo($this->tipoControllo);
             $tempData->colValue = $findMatch->idAccertamento($this->tipoControllo);
-            $this->setTipoControllo($this->tipoControllo);
+            //$this->setTipoControllo($this->tipoControllo);    //??????
             $this->tempDataAccertamento[] = $tempData;
 
             $tempData = new Column;
@@ -59,13 +60,13 @@
 
         function setTipoControllo($tempValue){
             if($tempValue == "clin"){
-                //chiedere!
+                //ECO!!!!!!!!!!!
             }
             elseif($tempValue == "CONV"){
-                //chiedere!
+                //ECO!!!!!!!!!!!!!!!!!!!
             }
             elseif($tempValue == "CUP"){
-                //chiedere!
+                //ECO!!!!!!!!!!!!!!!
             }
             elseif($tempValue == "DATAB" || $tempValue == "DBASE" || $tempValue == "TEL" || $tempValue == "tel"){
                 $tempValue = "Controllo Telefonico";
@@ -74,16 +75,18 @@
                 $tempValue = "Ecografia";
             }
             elseif($tempValue == "ECORI"){
-                //chiedere!
+                //è ECORX
             }
             elseif($tempValue == "ecorx" || $tempValue == "rxeco"){
-                $tempValue = "RX";
+                //$tempValue = "RX";
+
+                //è SIA ECO CHE RX CIOè HA FATTO TUTTE E DUE
             }
             elseif($tempValue == "ECOtc" || $tempValue == "TC" || $tempValue == "Tac"){
                 $tempValue = "TC";
             }
             elseif($tempValue == "RICOV"){
-                //chiedere!
+                //ECO!!!!!!!!!!!!
             }
             else{
                 $tempValue = "migrato-ND";

@@ -30,13 +30,13 @@
                 $tempValue = "Dott. Cieri";
             }
             elseif($tempValue == "COSCARELLA"){
-
+                $tempValue = "Dott. Coscarella";
             }
             elseif($tempValue == "GIORDANO"){
                 $tempValue = "Dott.  Giordano";
             }
             elseif($tempValue == "IACONO"){
-
+                $tempValue = "Dott. Iacono";
             }
             elseif($tempValue == "LENTI"){
                 $tempValue = "Dott. Lenti";
@@ -51,7 +51,7 @@
                 $tempValue = "Dott. Romano";
             }
             elseif($tempValue == "TAVOLINI"){
-
+                $tempValue = "Dott. Tavolini";
             }
             elseif($tempValue == "VERZINI"){
                 $tempValue = "Dott. Verzini";
@@ -88,15 +88,18 @@
         function idAccertamento($tempValue){
             #region if
             if($tempValue == "clin"){
-                //chiedere!
+                $tempValue = "Ecografia";
             }
             elseif($tempValue == "CONV"){
-                //chiedere!
+                $tempValue = "Ecografia";
             }
             elseif($tempValue == "CUP"){
-                //chiedere!
+                $tempValue = "Ecografia";
             }
             elseif($tempValue == "DATAB"){
+                $tempValue = "Controllo Telefonico";
+            }
+            elseif($tempValue == "datab"){
                 $tempValue = "Controllo Telefonico";
             }
             elseif($tempValue == "DBASE"){
@@ -105,28 +108,66 @@
             elseif($tempValue == "eco"){
                 $tempValue = "Ecografia";
             }
+            elseif($tempValue == "Eco"){
+                $tempValue = "Ecografia";
+            }
             elseif($tempValue == "eco*"){
                 $tempValue = "Ecografia";
             }
+            elseif($tempValue == "ECO"){
+                $tempValue = "Ecografia";
+            }
             elseif($tempValue == "ECORI"){
-                //chiedere!
+                $tempValue = "Ecografia";
+                //da aggiungere anche rx
             }
             elseif($tempValue == "ecorx"){
                 $tempValue = "RX";
+                //da aggiungere anche la ecografia
             }
-            elseif($tempValue == "ECOtc"){
-                $tempValue = "TC";
+            elseif($tempValue == "ecoRx"){
+                $tempValue = "RX";
+                //da aggiungere anche la ecografia
             }
-            elseif($tempValue == "RICOV"){
-                //chiedere!
+            elseif($tempValue == "ECORX"){
+                $tempValue = "RX";
+                //da aggiungere anche la ecografia
+            }
+            elseif($tempValue == "ECOrx"){
+                $tempValue = "RX";
+                //da aggiungere anche la ecografia
             }
             elseif($tempValue == "rxeco"){
                 $tempValue = "RX";
             }
+            elseif($tempValue == "RICOV"){
+                $tempValue = "Ecografia";
+            }
             elseif($tempValue == "TC"){
                 $tempValue = "TC";
             }
+            elseif($tempValue == "Tc"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "tc"){
+                $tempValue = "TC";
+            }
             elseif($tempValue == "Tac"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "ECOtc"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "ECOTC"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "ecoTC"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "ecotc"){
+                $tempValue = "TC";
+            }
+            elseif($tempValue == "Ecotc"){
                 $tempValue = "TC";
             }
             elseif($tempValue == "TEL"){
@@ -170,7 +211,7 @@
                 $decesso = "Polmonari";
             }
             elseif($column == "AL"){
-                $decesso = "Gastrointestinali";
+                $decesso = "Gastrintestinali";
             }
             elseif($column == "AM"){
                 $decesso = "Renali";
@@ -215,6 +256,34 @@
             $query = "SELECT id FROM atc WHERE class = '$code'";
             $id = $this->getValue($query, "id");
             return $id;
+        }
+
+        function accesso($value){
+            if($value == "Dx"){
+                $value = "Dx";
+            }
+            else if($value == "DX"){
+                $value = "Dx";
+            }
+            else if($value == "dX"){
+                $value = "Dx";
+            }
+            else if($value == "dx"){
+                $value = "Dx";
+            }
+            else if($value == "Sx"){
+                $value = "Sx";
+            }
+            else if($value == "SX"){
+                $value = "Sx";
+            }
+            else if($value == "sX"){
+                $value = "Sx";
+            }
+            else if($value == "sx"){
+                $value = "Sx";
+            }
+            return $value;
         }
 
         //this method gets called by the others to perform the select query

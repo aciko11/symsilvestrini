@@ -3,6 +3,7 @@
     class Complicanza{
         public $tempDataComplicanza = array();
         public $id;
+        public $note = null;
 
         function create($sheet, $rowOffset, $descComplicanza, $idIntervento, $dataInizio, $intraOp, $protesiRelata){
             global $lineSeparator;
@@ -44,6 +45,13 @@
             $tempData->colName = "dataInizio";
             $tempData->colValue = $dataInizio;
             $this->tempDataComplicanza[] = $tempData;
+
+            if($this->note != null){
+                $tempData = new Column;
+                $tempData->colName = "note";
+                $tempData->colValue = $this->note;
+                $this->tempDataComplicanza[] = $tempData;
+            }
 
             $this->id = $idComplicanza;
             $insert->insert($this->tempDataComplicanza, "complicanza");

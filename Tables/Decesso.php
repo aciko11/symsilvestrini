@@ -28,6 +28,7 @@
 
             $tempData = new Column;
             $tempData->colName = "causa";
+            echo($column);
             $idDecesso = $findMatch->idTipoDecesso($column);
             $tempData->colValue = $idDecesso;
             $this->tempDataDecesso[] = $tempData;

@@ -53,7 +53,7 @@
 
             $this->tempDataTipo[] = "Polmonari";  //482.9 se trovo polmonite 491.21 altrimenti
 
-            $this->tempDataTipo[] = "Gastrntestinali";   //capitolo 9 
+            $this->tempDataTipo[] = "Gastrintestinali";   //capitolo 9 
 
             $this->tempDataTipo[] = "Renali";  //585
 

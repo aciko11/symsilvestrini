@@ -62,7 +62,7 @@ class Tac{
 
         //colonna DD
         $tempData = new Column;
-        $tempData->colName = "aneuAortico_Trombo";  //controllare per sicurezza
+        $tempData->colName = "aneuAortico_Trombo";  
         $tempData->colValue = $sheet->getCell('DD'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
@@ -85,16 +85,10 @@ class Tac{
         $this->tempDataTac[] = $tempData;
 
         //colonna DH
-        $tempData = new Column;
-        $tempData->colName = "iliacaComDx_Diam";    //controllare per sicurezza, al posto del _Diam ci vorrebbe la lunghezza
-        $tempData->colValue = $sheet->getCell('DH'.$rowOffset)->getValue();;
-        $this->tempDataTac[] = $tempData;
+        //non piu interessante
 
         //colonna DI
-        $tempData = new Column;
-        $tempData->colName = "iliacaComSx_Diam";    //controllare per sicurezza, al posto del _Diam ci vorrebbe la lunghezza
-        $tempData->colValue = $sheet->getCell('DI'.$rowOffset)->getValue();;
-        $this->tempDataTac[] = $tempData;
+        //non piu interessante
 
         //colonna DJ
         $tempData = new Column;
@@ -123,45 +117,45 @@ class Tac{
         //colonna DN
         $tempData = new Column;
         $tempData->colName = "ipogasSx_Aneu";   //quale di questi 2?
-        $tempData->colName = "ipogasDx_Aneu";   //sul cook è semplicemente aneurisma ipogastrico
+        $tempData->colName = "ipogasDx_Aneu";   //nessuno dei due guardare appunti, è un campo booleano
         $tempData->colValue = $sheet->getCell('DN'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DO
         $tempData = new Column;
-        $tempData->colName = "artRenDx_Stenosi";    //da ricontrollare
+        $tempData->colName = "artRenDx_Stenosi";    //guardare appunti
         $tempData->colValue = $sheet->getCell('DO'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DP
         $tempData = new Column;
-        $tempData->colName = "artRenSx_Stenosi";    //da ricontrollare come sopra
+        $tempData->colName = "artRenSx_Stenosi";    //guardare appunti
         $tempData->colValue = $sheet->getCell('DP'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DQ
         $tempData = new Column;
-        $tempData->colName = "iliacaEstDx_Occlus";  //da ricontrollare non c'è l'Est sul cook
+        $tempData->colName = "iliacaEstDx_Occlus";  //guardare appunti
         $tempData->colValue = $sheet->getCell('DQ'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DR
         $tempData = new Column;
-        $tempData->colName = "iliacaEstSx_Occlus";  //da ricontrollare come sopra    
+        $tempData->colName = "iliacaEstSx_Occlus";  //guardare appunti    
         $tempData->colValue = $sheet->getCell('DR'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         /*
         //colonna DS
         $tempData = new Column;
-        $tempData->colName = "";    //CLASSIFICAZIONE????
+        $tempData->colName = "";    //CLASSIFICAZIONE???? guardare appunti
         $tempData->colValue = $sheet->getCell('DS'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
         */
 
         //colonna DT
         $tempData = new Column;
-        $tempData->colName = "collSup_Ang"; //da ricontrollare, nel cook non c'è il Sup
+        $tempData->colName = "collSup_Ang"; 
         $tempData->colValue = $sheet->getCell('DT'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
@@ -174,13 +168,13 @@ class Tac{
         /*
         //colonna DV
         $tempData = new Column;
-        $tempData->colName = "";    //angolazione iliaca dx
+        $tempData->colName = "";    //guardare appunti
         $tempData->colValue = $sheet->getCell('DV'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DW
         $tempData = new Column;
-        $tempData->colName = "";    //angolazione iliaca sx
+        $tempData->colName = "";    //guardare appunti
         $tempData->colValue = $sheet->getCell('DW'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
         */
@@ -199,13 +193,13 @@ class Tac{
 
         //colonna DZ
         $tempData = new Column;
-        $tempData->colName = "collIliacoComDx_CalcioCirconf";   //da ricontrollare, calciocirconferenzialeiliaca
+        $tempData->colName = "collIliacoComDx_CalcioCirconf";   
         $tempData->colValue = $sheet->getCell('DZ'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna EA
         $tempData = new Column;
-        $tempData->colName = "collIliacoComDx_CalcioNonCirconf";    //da ricontrollare, come sopra
+        $tempData->colName = "collIliacoComDx_CalcioNonCirconf";    
         $tempData->colValue = $sheet->getCell('EA'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
