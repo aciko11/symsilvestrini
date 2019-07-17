@@ -46,13 +46,16 @@ class Tac{
         $tempData->colValue = $sheet->getCell('DA'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
-        /*
+        
         //colonna DB
         $tempData = new Column;      
-        $tempData->colName = "";   //"Diametro aorta" ma quale????
-        $tempData->colValue = $sheet->getCell('DB'.$rowOffset)->getValue();;
+        $tempData->colName = "aorta_Diam";
+        $tempData->colValue = $sheet->getCell('DB'.$rowOffset)->getValue();
+        if($tempData->colValue == "#NULL!"){
+            $tempData->colValue = "";
+        }
         $this->tempDataTac[] = $tempData;
-        */
+        
 
         //colonna DC
         $tempData = new Column;
@@ -123,35 +126,60 @@ class Tac{
 
         //colonna DO
         $tempData = new Column;
-        $tempData->colName = "artRenDx_Stenosi";    //guardare appunti
+        $tempData->colName = "iliacaComDx_Stenosi"; 
         $tempData->colValue = $sheet->getCell('DO'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DP
         $tempData = new Column;
-        $tempData->colName = "artRenSx_Stenosi";    //guardare appunti
+        $tempData->colName = "iliacaComSx_Stenosi";
         $tempData->colValue = $sheet->getCell('DP'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DQ
         $tempData = new Column;
-        $tempData->colName = "iliacaEstDx_Occlus";  //guardare appunti
+        $tempData->colName = "iliacaComDx_Occlus";
         $tempData->colValue = $sheet->getCell('DQ'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DR
         $tempData = new Column;
-        $tempData->colName = "iliacaEstSx_Occlus";  //guardare appunti    
+        $tempData->colName = "iliacaComSx_Occlus";   
         $tempData->colValue = $sheet->getCell('DR'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
-        /*
+        
         //colonna DS
         $tempData = new Column;
-        $tempData->colName = "";    //CLASSIFICAZIONE???? guardare appunti
-        $tempData->colValue = $sheet->getCell('DS'.$rowOffset)->getValue();;
+        $tempData->colName = "classificazioneAneu"; ///////su che tabella va??????    
+        $value = $sheet->getCell('DS'.$rowOffset)->getValue();
+        #region conversione
+
+        if($value == "a" || $value == "A"){
+            $value = "a";
+        }
+        if($value == "b" || $value == "B"){
+            $value = "b";
+        }
+        if($value == "c" || $value == "C"){
+            $value = "c";
+        }
+        if($value == "1" || $value == "1"){
+            $value = 1;
+        }
+        if($value == "2" || $value == "2"){
+            $value = 2;
+        }
+        if($value == "3" || $value == "3"){
+            $value = 3;
+        }
+        if($value == "4" || $value == "4"){
+            $value = 4;
+        }
+        $tempData->colValue = $value;
+        #endregion
         $this->tempDataTac[] = $tempData;
-        */
+        
 
         //colonna DT
         $tempData = new Column;

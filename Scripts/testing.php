@@ -8,4 +8,7 @@
     echo $test[1][0];
 
 
+    $date = "2019-05-03";
+    $query = "SELECT DATE_ADD('2017-06-15', INTERVAL -2 MONTH)";
+
 ?>
