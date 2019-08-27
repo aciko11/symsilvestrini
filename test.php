@@ -53,8 +53,8 @@
 
     //reference to the file
     //$file = "files/Cook database 27feb17.xlsx"; 
-    //$file = "Cook database originale di Grazia con anche Nominativi.xlsx";
-    $file = "files/test.xlsx";
+    $file = "files/Cook database originale di Grazia con anche Nominativi.xlsx";
+    //$file = "files/test.xlsx";
 
     //creating a reader for the file
     $excelReader = PHPExcel_IOFactory::createReaderForFile($file); 

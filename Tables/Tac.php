@@ -148,7 +148,7 @@ class Tac{
         $tempData->colValue = $sheet->getCell('DR'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
-        
+        /*
         //colonna DS
         $tempData = new Column;
         $tempData->colName = "classificazioneAneu"; ///////su che tabella va??????    
@@ -179,6 +179,7 @@ class Tac{
         $tempData->colValue = $value;
         #endregion
         $this->tempDataTac[] = $tempData;
+        */
         
 
         //colonna DT
@@ -192,20 +193,18 @@ class Tac{
         $tempData->colName = "aorta_AngBiforc";
         $tempData->colValue = $sheet->getCell('DU'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
-
-        /*
+   
         //colonna DV
         $tempData = new Column;
-        $tempData->colName = "";    //guardare appunti
+        $tempData->colName = "iliacaComDx_Ang";    
         $tempData->colValue = $sheet->getCell('DV'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 
         //colonna DW
         $tempData = new Column;
-        $tempData->colName = "";    //guardare appunti
+        $tempData->colName = "iliacaComSx_Ang";   
         $tempData->colValue = $sheet->getCell('DW'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
-        */
 
         //colonna DX
         $tempData = new Column;

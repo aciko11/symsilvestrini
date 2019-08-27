@@ -26,6 +26,7 @@
             }
             elseif($num == 3){
                 $dataIngresso = $sheet->getCell('AV'.$rowOffset)->getValue();    //dataIngresso
+                echo($rowOffset);
                 $tempData->colValue = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($dataIngresso));
             }          
             $this->tempDataRicovero[] = $tempData;

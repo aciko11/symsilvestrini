@@ -28,6 +28,7 @@
             //all the respective values
             for($i = 0; $i < $dataSize; $i++){
                 $temp = $data[$i]->colValue;
+                $temp = str_replace("'", "''", $temp);
                 $query = $query."'".$temp."', ";
             }
             $query = substr_replace($query, "", -2);
