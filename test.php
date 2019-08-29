@@ -83,19 +83,24 @@
     //all the classes in /Tables only do 1 line of the database to do the others simply do a for cycle
     $paziente = new Paziente();
     $paziente->createData($sheet, $rowOffset, 0);
+    echo("<BR>1<BR>");
 
     $ricovero = new Ricovero();
     $ricovero->create($sheet, $rowOffset, $paziente->id, 1);
+    echo("<BR>2<BR>");
 
     $intervento = new Intervento();
     $intervento->create($sheet, $rowOffset, $paziente->id, $ricovero->id, 1, null);
+    echo("<BR>3<BR>");
 
     if($sheet->getCell('F'.$rowOffset)->getValue() == 1){
         $ricovero2 = new Ricovero;
         $ricovero2->create($sheet, $rowOffset, $paziente->id, 2);
+        echo("<BR>4<BR>");
 
         $intervento2 = new Intervento;
         $intervento2->create($sheet, $rowOffset, $paziente->id, $ricovero2->id, 2, $intervento->id);
+        echo("<BR>5<BR>");
     }
 
     /*$size = sizeof($paziente->tempDataPaziente);
@@ -115,36 +120,42 @@
         $descComplicanza = "endoleak di tipo I-migrato-ND";  
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
+        echo("<BR>6<BR>");
     }
     if($sheet->getCell("K".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo II"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
+        echo("<BR>7<BR>");
     }
     if($sheet->getCell("L".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo III"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, true, true);
+        echo("<BR>8<BR>");
     }
     if($sheet->getCell("P".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "Migrazione graft"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
+        echo("<BR>9<BR>");
     }
     if($sheet->getCell("Q".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "Occlusione di branca iliaca"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, false);
+        echo("<BR>10<BR>");
     }
     if($sheet->getCell("R".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "sanguinamento"; 
         $dataComplicanza = $intervento->tempDataIntervento[0]->colValue;
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, false);
+        echo("<BR>11<BR>");
     }
 
 
@@ -168,16 +179,19 @@
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo I-migrato-ND";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
+        echo("<BR>12<BR>");
     }
     if($sheet->getCell("W".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo III";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
+        echo("<BR>12<BR>");
     }
     if($sheet->getCell("X".$rowOffset)->getValue() == 1){
         $complicanza = new Complicanza;
         $descComplicanza = "endoleak di tipo II";
         $complicanza->create($sheet, $rowOffset, $descComplicanza, $intervento->id, $dataComplicanza, false, true);
+        echo("<BR>13<BR>");
     }
     */
 
@@ -192,6 +206,7 @@
             $inVita = 0;
         }
     }
+    echo("<BR>14<BR>");
 
     //accertamento TAC 
     $accertamentoTac = new Accertamento;
@@ -202,11 +217,12 @@
     $accertamentoTac->createTac($sheet, $rowOffset, $paziente->id, $tempDate);
     $tacForAll = new Tac;
     $tacForAll->createBlank($sheet, $rowOffset, $accertamentoTac->id);
-
+    echo("<BR>15<BR>");
     //accertamento
     echo($rowOffset);
     $accertamento = new Accertamento;
     $accertamento->create($sheet, $rowOffset, $paziente->id);
+    echo("<BR>16<BR>");
 
     $temp = $accertamento->tipoControllo;
     if($temp == "Ecografia"){
@@ -229,6 +245,7 @@
             $controllo_telefonico = new Controllo_telefonico;
             $controllo_telefonico->create($sheet, $rowOffset, $accertamento->id, $inVita);
     }
+    echo("<BR>17<BR>");
     
     
 
@@ -241,6 +258,7 @@
         $intervento3 = new Intervento;
         $intervento3->create($sheet, $rowOffset, $paziente->id, $ricovero3->id, 3, $intervento2->id);
     }
+    echo("<BR>18<BR>");
 
     //terapie colonne da BC a BJ
     $check = $sheet->getCell('BC'.$rowOffset)->getValue();
@@ -284,26 +302,33 @@
         $terapia->create($sheet, $rowOffset, $paziente->id, $sheet->getCell('BF1')->getValue(), 
             $intervento->id, $intervento->date);
     }
+    echo("<BR>19<BR>");
 
 
     //complicanza obesità
     $check = $sheet->getCell('CJ'.$rowOffset)->getValue();
     if($check == 1){
-        $_patologia = mysqli_real_escape_string($connect, "OBESITA'");
+        $_patologia = mysqli_real_escape_string($connect, "Obesita' non specificata");
         $patologia = new Patologia;       
         $patologia->create($sheet, $rowOffset, $paziente->id, $_patologia);
     }
+    echo("<BR>20<BR>");
 
     $accertamento2 = new Accertamento;
     $accertamento2->createTac($sheet, $rowOffset, $paziente->id, $intervento->date);
+    echo("<BR>21<BR>");
 
     $tac = new Tac;
     $tac->create($sheet, $rowOffset, $accertamento2->id);
+    echo("<BR>22<BR>");
     
     $complicanzaConversione = new Complicanza;
+    $complicanza_name = mysqli_real_escape_string($connect, "Conversione all'intervento in aperto");
+    echo($complicanza_name);
     $complicanzaConversione->note = $sheet->getCell('FR'.$rowOffset)->getValue();
-    $complicanzaConversione->create($sheet, $rowOffset, "conversione all-aperto", $intervento->id,
+    $complicanzaConversione->create($sheet, $rowOffset, $complicanza_name, $intervento->id,
         $intervento->date, 1, 1);
+    echo("<BR>23<BR>");
 
 
     }

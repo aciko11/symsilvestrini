@@ -119,8 +119,7 @@ class Tac{
 
         //colonna DN
         $tempData = new Column;
-        $tempData->colName = "ipogasSx_Aneu";   //quale di questi 2?
-        $tempData->colName = "ipogasDx_Aneu";   //nessuno dei due guardare appunti, è un campo booleano
+        $tempData->colName = "ipogas_Aneu";
         $tempData->colValue = $sheet->getCell('DN'.$rowOffset)->getValue();;
         $this->tempDataTac[] = $tempData;
 

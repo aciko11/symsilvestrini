@@ -44,6 +44,11 @@
     $col->colValue = "int";
     $columns[] = $col;
 
+    $col = new Column;
+    $col->colName = "ipogas_Aneu";
+    $col->colValue = "tinyint";
+    $columns[] = $col;
+
 
 
 
@@ -82,18 +87,45 @@
         echo($query."<BR><BR>");
         mysqli_query($connect, $query); //or die(mysqli_error($connect));
         if(mysqli_error($connect) != NULL){
-            echo(mysqli_error($connect));
+            echo(mysqli_error($connect)."<BR><BR>");
         }
     }
 
-    $table = "tipo_complicanza";
-    $desc = "Endoleak di tipo I-migrato-ND";
+    //Start of the insert into queries
 
-    $query = "INSERT INTO ".$table." (descrizione) VALUES ('".$desc."')";
-    echo($query."<BR><BR>");
-    mysqli_query($connect, $query);
-    if(mysqli_error($connect) != NULL){
-        echo(mysqli_error($connect));
+    $tableNames = array();
+    $tableValues = array();
+
+    $name = "tipo_complicanza";
+    $desc = "Endoleak di tipo I-migrato-ND";
+    $tableNames[] = $name;
+    $tableValues[] = $desc;
+
+    $name = "tipo_intervento";
+    $desc = "migrato-ND";
+    $tableNames[] = $name;
+    $tableValues[] = $desc;
+
+    $name = "tipo_accertamento";
+    $desc = "migrato-ND";
+    $tableNames[] = $name;
+    $tableValues[] = $desc;
+
+    $i = 0;
+    foreach($tableNames as $tableName){
+
+        $query = "INSERT INTO ".$tableName." (descrizione) VALUES ('".$tableValues[$i]."')";
+        echo($query."<BR><BR>");
+
+        mysqli_query($connect, $query);
+        if(mysqli_error($connect) != NULL){
+            echo(mysqli_error($connect)."<BR><BR>");
+        }
+
+        $i++;
     }
+
+    
+    
 
 ?>

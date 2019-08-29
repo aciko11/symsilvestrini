@@ -97,8 +97,8 @@
             $tempData = new Column;
             $tempData->colName = "causa1";
             if($num == 1){
-                $idTipoPatologia = $findMatch->idTipoPatologia("ANEURISMA AORTA ADDOMINALE ROTTO"); //riferimento tipo patologia.
-                //$idTipoPatologia = $findMatch->idTipoPatologia("Rottura di aneurisma addominale");
+                //$idTipoPatologia = $findMatch->idTipoPatologia("ANEURISMA AORTA ADDOMINALE ROTTO"); //riferimento tipo patologia.
+                $idTipoPatologia = $findMatch->idTipoPatologia("Rottura di aneurisma addominale");
                 $tempData->colValue = $idTipoPatologia;
             }
             elseif($num == 2){

@@ -86,98 +86,99 @@
         }
 
         function idAccertamento($tempValue){
+            $values = array("Ecografia", "Controllo Telefonico", "RX", "TC", "migrato-ND");
             #region if
             if($tempValue == "clin"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "CONV"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "CUP"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "DATAB"){
-                $tempValue = "Controllo Telefonico";
+                $tempValue = $values[1];
             }
             elseif($tempValue == "datab"){
-                $tempValue = "Controllo Telefonico";
+                $tempValue = $values[1];
             }
             elseif($tempValue == "DBASE"){
-                $tempValue = "Controllo Telefonico";
+                $tempValue = $values[1];
             }
             elseif($tempValue == "eco"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "Eco"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "eco*"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "ECO"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "ECORI"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
                 //da aggiungere anche rx
             }
             elseif($tempValue == "ecorx"){
-                $tempValue = "RX";
+                $tempValue = $values[2];
                 //da aggiungere anche la ecografia
             }
             elseif($tempValue == "ecoRx"){
-                $tempValue = "RX";
+                $tempValue = $values[2];
                 //da aggiungere anche la ecografia
             }
             elseif($tempValue == "ECORX"){
-                $tempValue = "RX";
+                $tempValue = $values[2];
                 //da aggiungere anche la ecografia
             }
             elseif($tempValue == "ECOrx"){
-                $tempValue = "RX";
+                $tempValue = $values[2];
                 //da aggiungere anche la ecografia
             }
             elseif($tempValue == "rxeco"){
-                $tempValue = "RX";
+                $tempValue = $values[2];
             }
             elseif($tempValue == "RICOV"){
-                $tempValue = "Ecografia";
+                $tempValue = $values[0];
             }
             elseif($tempValue == "TC"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "Tc"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "tc"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "Tac"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "ECOtc"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "ECOTC"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "ecoTC"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "ecotc"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "Ecotc"){
-                $tempValue = "TC";
+                $tempValue = $values[3];
             }
             elseif($tempValue == "TEL"){
-                $tempValue = "Controllo Telefonico";
+                $tempValue = $values[1];
             }
             elseif($tempValue == "tel"){
-                $tempValue = "Controllo Telefonico";
+                $tempValue = $values[1];
             }
             else{
-                $tempValue = "migrato-ND";
+                $tempValue = $values[4];
             }
             #endregion
 
